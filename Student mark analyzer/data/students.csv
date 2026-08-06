@@ -1,0 +1,11 @@
+StudentID,Name,Department,Math,Science,English,Attendance
+101,Alice,CSE,85,90,88,95
+102,Bob,AI,78,82,80,90
+103,Charlie,CSE,92,91,89,98
+104,David,ECE,65,70,68,85
+105,Eva,AI,88,85,90,97
+106,Frank,ECE,72,75,70,88
+107,Grace,CSE,95,94,96,99
+108,Henry,AI,81,79,84,92
+109,Ivy,ECE,69,73,71,86
+110,Jack,CSE,87,89,85,96
