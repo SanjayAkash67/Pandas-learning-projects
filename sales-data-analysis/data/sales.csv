@@ -1,0 +1,13 @@
+OrderID,Customer,City,Category,Product,Quantity,Price,Date
+1001,Alice,Chennai,Electronics,Laptop,1,55000,2026-01-10
+1002,Bob,Coimbatore,Furniture,Chair,4,2500,2026-01-12
+1003,Charlie,Bangalore,Electronics,Mouse,3,700,2026-01-15
+1004,David,Chennai,Furniture,Table,2,8000,2026-01-18
+1005,Eva,Madurai,Electronics,Keyboard,5,1200,2026-01-19
+1006,Frank,Coimbatore,Electronics,Monitor,2,15000,2026-01-20
+1007,Grace,Bangalore,Furniture,Sofa,1,35000,2026-01-22
+1008,Henry,Chennai,Electronics,Headphones,6,2500,2026-01-24
+1009,Ivy,Madurai,Furniture,Cupboard,1,18000,2026-01-25
+1010,Jack,Coimbatore,Electronics,Laptop,2,55000,2026-01-28
+1011,Kate,Chennai,Furniture,Chair,8,2500,2026-02-02
+1012,Liam,Bangalore,Electronics,Monitor,1,15000,2026-02-05
