@@ -1,0 +1,13 @@
+EmployeeID,Name,Department,City,Experience,Salary,Performance
+101,Alice,IT,Chennai,2,50000,4.5
+102,Bob,HR,Coimbatore,5,65000,4.2
+103,Charlie,Finance,Bangalore,7,72000,4.8
+104,David,IT,Chennai,4,60000,4.1
+105,Eva,HR,Madurai,3,55000,4.0
+106,Frank,Finance,Bangalore,10,90000,4.9
+107,Grace,IT,Coimbatore,6,75000,4.6
+108,Henry,Marketing,Chennai,8,70000,4.3
+109,Ivy,Marketing,Madurai,5,68000,4.4
+110,Jack,Finance,Coimbatore,9,88000,4.7
+111,Kate,HR,Chennai,4,58000,4.2
+112,Liam,IT,Bangalore,3,62000,4.3
