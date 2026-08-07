@@ -52,9 +52,9 @@ Pandas/
 |-----|---------|:------:|
 | 01 | Student Marks Analyzer | ✅ |
 | 02 | Data Cleaning & Missing Values | ✅ |
-| 03 | Filtering & Sorting | ⏳ |
-| 04 | GroupBy & Aggregation | ⏳ |
-| 05 | Merge & Join | ⏳ |
+| 03 | Filtering & Sorting | ✅ |
+| 04 | GroupBy & Aggregation | ✅ |
+| 05 | Merge & Join | ✅  |
 | 06 | Pivot Tables | ⏳ |
 | 07 | Time Series | ⏳ |
 | 08 | String Operations | ⏳ |
