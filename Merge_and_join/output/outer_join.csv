@@ -1,0 +1,9 @@
+OrderID,CustomerID,ProductID,Quantity,CustomerName,City
+1001,C101,P201,1,Alice,Chennai
+1004,C101,P204,1,Alice,Chennai
+1002,C102,P203,4,Bob,Coimbatore
+1007,C102,P204,1,Bob,Coimbatore
+1003,C103,P202,2,Charlie,Bangalore
+1008,C103,P201,1,Charlie,Bangalore
+1006,C104,P203,6,David,Madurai
+1005,C105,P205,2,Eva,Chennai

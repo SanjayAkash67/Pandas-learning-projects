@@ -1,0 +1,9 @@
+OrderID,CustomerID,ProductID,Quantity,CustomerName,City,ProductName,Category,Price,Revenue
+1001,C101,P201,1,Alice,Chennai,Laptop,Electronics,55000,55000
+1002,C102,P203,4,Bob,Coimbatore,Chair,Furniture,2500,10000
+1003,C103,P202,2,Charlie,Bangalore,Mouse,Electronics,700,1400
+1004,C101,P204,1,Alice,Chennai,Monitor,Electronics,15000,15000
+1005,C105,P205,2,Eva,Chennai,Table,Furniture,8000,16000
+1006,C104,P203,6,David,Madurai,Chair,Furniture,2500,15000
+1007,C102,P204,1,Bob,Coimbatore,Monitor,Electronics,15000,15000
+1008,C103,P201,1,Charlie,Bangalore,Laptop,Electronics,55000,55000
