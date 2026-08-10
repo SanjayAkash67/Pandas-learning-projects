@@ -1,0 +1,9 @@
+CustomerID,CustomerName,City,Email,Review,ReviewLength
+101,Alice,CHENNAI,alice@gmail.com,Excellent Product,17
+102,Bob,COIMBATORE,bob@gmail.com,Very Good Service,17
+103,Charlie,BANGALORE,charlie@yahoo.com,average delivery,16
+104,David,CHENNAI,david@gmail.com,GOOD Packaging,14
+105,Eva,MADURAI,eva@gmail.com,late Delivery,13
+106,Frank,COIMBATORE,frank@yahoo.com,Excellent Product,17
+107,Grace,BANGALORE,grace@gmail.com,Good packaging,14
+108,Henry,CHENNAI,henry@gmail.com,Excellent PRODUCT,17

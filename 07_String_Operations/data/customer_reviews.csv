@@ -1,0 +1,9 @@
+CustomerID,CustomerName,City,Email,Review
+101, alice ,chennai,ALICE@gmail.com," Excellent Product "
+102,BOB,Coimbatore,bob@GMAIL.COM,"Very Good Service"
+103,charlie,bangalore,Charlie@yahoo.com," average delivery "
+104,David,Chennai,david@gmail.com,"GOOD Packaging"
+105,EVA,Madurai,eva@gmail.com," late Delivery "
+106, frank ,coimbatore,Frank@Yahoo.com,"Excellent Product"
+107,Grace,BANGALORE,grace@gmail.com,"Good packaging"
+108,HENRY,chennai,henry@gmail.com,"Excellent PRODUCT"

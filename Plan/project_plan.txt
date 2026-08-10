@@ -1,0 +1,174 @@
+Stage 1 – Data Analysis (DA)
+
+Goal: Learn how to explore and understand data.
+
+Pandas Basics – Student Marks Analyzer
+NumPy – Matrix Operations Simulator
+Data Cleaning – Netflix Dataset Cleaner
+Missing Values – Employee Dataset Repair
+Data Visualization – COVID Dashboard
+Feature Engineering – House Price Dataset
+Outlier Detection – Bank Transactions
+Correlation Analysis – Car Price Dataset
+EDA Project – Titanic Dataset
+Complete EDA Report
+
+------------------------------------------------------------------------------------
+Stage 2 – Machine Learning
+
+Regression
+Linear Regression – House Price Prediction
+Multiple Linear Regression – Salary Prediction
+Polynomial Regression – Fuel Consumption
+Ridge Regression
+Lasso Regression
+ElasticNet Regression
+Classification
+Logistic Regression – Diabetes Prediction
+KNN – Iris Classifier
+Naive Bayes – Spam Detector
+Decision Tree – Loan Approval
+Random Forest – Customer Churn
+Extra Trees
+Support Vector Machine
+Gradient Boosting
+AdaBoost
+XGBoost
+LightGBM
+CatBoost
+Clustering
+K-Means – Customer Segmentation
+Hierarchical Clustering
+DBSCAN
+Gaussian Mixture Models
+Dimensionality Reduction
+PCA Visualization
+t-SNE Visualization
+UMAP
+Anomaly Detection
+Isolation Forest
+One-Class SVM
+Local Outlier Factor
+
+------------------------------------------------------------------------------------
+
+
+Stage 3 – Deep Learning
+Tensor Basics
+Neural Network from Scratch (NumPy)
+ANN – MNIST
+Regularization
+Dropout
+Batch Normalization
+Hyperparameter Tuning
+
+------------------------------------------------------------------------------------
+
+
+Stage 4 – Computer Vision
+CNN – Digit Recognition
+CNN – Cats vs Dogs
+Transfer Learning
+ResNet
+EfficientNet
+MobileNet
+YOLO
+Image Segmentation (U-Net)
+Object Tracking
+OCR
+Face Recognition
+
+------------------------------------------------------------------------------------
+
+
+Stage 5 – NLP
+Text Cleaning
+TF-IDF
+Word2Vec
+GloVe
+FastText
+RNN
+LSTM
+GRU
+Seq2Seq
+Attention Mechanism
+Transformer
+BERT
+Sentence Transformers
+Text Classification
+Named Entity Recognition
+Sentiment Analysis
+
+------------------------------------------------------------------------------------
+
+
+Stage 6 – LLM Engineering
+Prompt Engineering
+Function Calling
+Structured Outputs
+Embeddings
+Vector Databases (FAISS)
+Semantic Search
+RAG
+Hybrid Search
+Re-ranking
+LangChain
+LlamaIndex
+Multi-Agent System
+MCP
+AI Chatbot
+AI Document Assistant
+
+------------------------------------------------------------------------------------
+
+
+Stage 7 – Time Series
+ARIMA
+Prophet
+LSTM Forecasting
+
+------------------------------------------------------------------------------------
+
+Stage 8 – Reinforcement Learning
+Q-Learning
+Deep Q Network
+CartPole Agent
+
+------------------------------------------------------------------------------------
+
+Stage 9 – Recommendation Systems
+Collaborative Filtering
+Content-Based Filtering
+Matrix Factorization
+
+------------------------------------------------------------------------------------
+
+Stage 10 – Generative AI
+Autoencoders
+Variational Autoencoders
+GAN
+Diffusion Models (Intro)
+
+------------------------------------------------------------------------------------
+
+Stage 11 – MLOps
+MLflow
+DVC
+FastAPI Model Serving
+Docker
+CI/CD for ML
+Monitoring
+
+------------------------------------------------------------------------------------
+
+Stage 12 – End-to-End Projects
+House Price Prediction Platform
+Medical Diagnosis System
+AI Resume Analyzer
+AI Legal Assistant (RAG)
+AI Research Assistant
+AI Sports Analytics
+AI Interview Coach
+Multi-Agent AI System
+AI SaaS Project
+Production Deployment

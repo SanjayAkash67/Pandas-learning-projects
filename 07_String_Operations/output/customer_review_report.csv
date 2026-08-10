@@ -1,0 +1,9 @@
+CustomerID,CustomerName,City,Email,Review,ReviewLength,WordCount,EmailDomain,ValidEmail,ValidPhone,Sentiment
+101,Alice,CHENNAI,alice@gmail.com,Excellent Product,17,2,gmail.com,True,True,Positive
+102,Bob,COIMBATORE,bob@gmail.com,Very Positive Service,17,3,gmail.com,True,True,Neutral
+103,Charlie,BANGALORE,charlie@yahoo.com,average delivery,16,2,yahoo.com,True,True,Neutral
+104,David,CHENNAI,david@gmail.com,Positive Packaging,14,2,gmail.com,True,True,Neutral
+105,Eva,MADURAI,eva@gmail.com,late Delivery,13,2,gmail.com,True,True,Negative
+106,Frank,COIMBATORE,frank@yahoo.com,Excellent Product,17,2,yahoo.com,True,True,Positive
+107,Grace,BANGALORE,grace@gmail.com,Positive packaging,14,2,gmail.com,True,True,Neutral
+108,Henry,CHENNAI,henry@gmail.com,Excellent PRODUCT,17,2,gmail.com,True,True,Positive
