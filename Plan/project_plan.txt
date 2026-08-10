@@ -1,174 +1,576 @@
-Stage 1 – Data Analysis (DA)
+╔══════════════════════════════════════════════════════════════════════╗
+║                    PROJECT 100 — AI / ML / DS                       ║
+║                 PROJECT-BASED LEARNING ROADMAP                     ║
+╚══════════════════════════════════════════════════════════════════════╝
 
-Goal: Learn how to explore and understand data.
+GOAL
+────
+Learn AI, Machine Learning, Deep Learning, Data Science and related
+technologies by building small practical projects.
 
-Pandas Basics – Student Marks Analyzer
-NumPy – Matrix Operations Simulator
-Data Cleaning – Netflix Dataset Cleaner
-Missing Values – Employee Dataset Repair
-Data Visualization – COVID Dashboard
-Feature Engineering – House Price Dataset
-Outlier Detection – Bank Transactions
-Correlation Analysis – Car Price Dataset
-EDA Project – Titanic Dataset
-Complete EDA Report
+CORE RULE
+─────────
+One Topic → One Mini Project → Learn the Concepts → Complete → Move On
 
-------------------------------------------------------------------------------------
-Stage 2 – Machine Learning
+The objective is not to memorize every library or algorithm first.
+Each project is used to understand and implement one concept in practice.
 
-Regression
-Linear Regression – House Price Prediction
-Multiple Linear Regression – Salary Prediction
-Polynomial Regression – Fuel Consumption
-Ridge Regression
-Lasso Regression
-ElasticNet Regression
-Classification
-Logistic Regression – Diabetes Prediction
-KNN – Iris Classifier
-Naive Bayes – Spam Detector
-Decision Tree – Loan Approval
-Random Forest – Customer Churn
-Extra Trees
-Support Vector Machine
-Gradient Boosting
-AdaBoost
-XGBoost
-LightGBM
-CatBoost
-Clustering
-K-Means – Customer Segmentation
-Hierarchical Clustering
-DBSCAN
-Gaussian Mixture Models
-Dimensionality Reduction
-PCA Visualization
-t-SNE Visualization
-UMAP
-Anomaly Detection
-Isolation Forest
-One-Class SVM
-Local Outlier Factor
+══════════════════════════════════════════════════════════════════════
+STAGE 1 — DATA ANALYSIS (DA)
+══════════════════════════════════════════════════════════════════════
 
-------------------------------------------------------------------------------------
+Goal: Learn how to load, clean, transform, explore, analyze and
+visualize datasets.
 
+──────────────────────────────────────────────────────────────────────
+01  Pandas Basics
+└─ Student Marks Analyzer
 
-Stage 3 – Deep Learning
-Tensor Basics
-Neural Network from Scratch (NumPy)
-ANN – MNIST
-Regularization
-Dropout
-Batch Normalization
-Hyperparameter Tuning
+02  Data Cleaning & Missing Values
+└─ Employee Dataset Repair
 
-------------------------------------------------------------------------------------
+03  Filtering, Sorting & Aggregation
+└─ Sales Data Analysis
 
+04  Merge & Join
+└─ Customer Orders & Products Analysis
 
-Stage 4 – Computer Vision
-CNN – Digit Recognition
-CNN – Cats vs Dogs
-Transfer Learning
-ResNet
-EfficientNet
-MobileNet
-YOLO
-Image Segmentation (U-Net)
-Object Tracking
-OCR
-Face Recognition
+05  Pivot Tables & Crosstabs
+└─ Employee Performance Dashboard
 
-------------------------------------------------------------------------------------
+06  Time Series with Pandas
+└─ Sales Trend Analyzer
 
+07  String Operations
+└─ Customer Reviews Analyzer
 
-Stage 5 – NLP
-Text Cleaning
-TF-IDF
-Word2Vec
-GloVe
-FastText
-RNN
-LSTM
-GRU
-Seq2Seq
-Attention Mechanism
-Transformer
-BERT
-Sentence Transformers
-Text Classification
-Named Entity Recognition
-Sentiment Analysis
+08  Large Dataset Processing
+└─ E-Commerce Transaction Analyzer
 
-------------------------------------------------------------------------------------
+09  Excel Data Processing
+└─ Automated Excel Sales Report
 
+10  NumPy Basics
+└─ Matrix Operations Simulator
 
-Stage 6 – LLM Engineering
-Prompt Engineering
-Function Calling
-Structured Outputs
-Embeddings
-Vector Databases (FAISS)
-Semantic Search
-RAG
-Hybrid Search
-Re-ranking
-LangChain
-LlamaIndex
-Multi-Agent System
-MCP
-AI Chatbot
-AI Document Assistant
+11  NumPy Numerical Computing
+└─ Image Pixel Operations
 
-------------------------------------------------------------------------------------
+12  Data Visualization
+└─ COVID-19 Analytics Dashboard
 
+13  Feature Engineering
+└─ House Price Feature Builder
 
-Stage 7 – Time Series
-ARIMA
-Prophet
-LSTM Forecasting
+14  Outlier Detection
+└─ Bank Transaction Anomaly Detector
 
-------------------------------------------------------------------------------------
+15  Correlation Analysis
+└─ Car Price Correlation Analyzer
 
-Stage 8 – Reinforcement Learning
-Q-Learning
-Deep Q Network
-CartPole Agent
+16  Exploratory Data Analysis
+└─ Titanic EDA
 
-------------------------------------------------------------------------------------
+17  Complete EDA
+└─ End-to-End Dataset Analysis Report
 
-Stage 9 – Recommendation Systems
-Collaborative Filtering
-Content-Based Filtering
-Matrix Factorization
+══════════════════════════════════════════════════════════════════════
+STAGE 2 — MACHINE LEARNING
+══════════════════════════════════════════════════════════════════════
 
-------------------------------------------------------------------------------------
+Goal: Learn classical Machine Learning algorithms by implementing
+each algorithm through a practical mini project.
 
-Stage 10 – Generative AI
-Autoencoders
-Variational Autoencoders
-GAN
-Diffusion Models (Intro)
+──────────────────────────────────────────────────────────────────────
+REGRESSION
+──────────────────────────────────────────────────────────────────────
 
-------------------------------------------------------------------------------------
+18  Linear Regression
+└─ House Price Prediction
 
-Stage 11 – MLOps
-MLflow
-DVC
-FastAPI Model Serving
-Docker
-CI/CD for ML
-Monitoring
+19  Multiple Linear Regression
+└─ Salary Prediction
 
-------------------------------------------------------------------------------------
+20  Polynomial Regression
+└─ Fuel Consumption Prediction
 
-Stage 12 – End-to-End Projects
-House Price Prediction Platform
-Medical Diagnosis System
-AI Resume Analyzer
-AI Legal Assistant (RAG)
-AI Research Assistant
-AI Sports Analytics
-AI Interview Coach
-Multi-Agent AI System
-AI SaaS Project
-Production Deployment
+21  Ridge Regression
+└─ Regularized House Price Prediction
+
+22  Lasso Regression
+└─ Feature Selection & Price Prediction
+
+23  ElasticNet Regression
+└─ Mixed Regularization Predictor
+
+──────────────────────────────────────────────────────────────────────
+CLASSIFICATION
+──────────────────────────────────────────────────────────────────────
+
+24  Logistic Regression
+└─ Diabetes Prediction
+
+25  K-Nearest Neighbors (KNN)
+└─ Iris Classifier
+
+26  Naive Bayes
+└─ Spam Detector
+
+27  Decision Tree
+└─ Loan Approval System
+
+28  Random Forest
+└─ Customer Churn Prediction
+
+29  Extra Trees
+└─ Employee Attrition Prediction
+
+30  Support Vector Machine
+└─ Cancer Classification
+
+31  Gradient Boosting
+└─ Customer Risk Prediction
+
+32  AdaBoost
+└─ Fraud Classification
+
+33  XGBoost
+└─ Customer Churn Predictor
+
+34  LightGBM
+└─ Large-Scale Classification
+
+35  CatBoost
+└─ Categorical Customer Prediction
+
+──────────────────────────────────────────────────────────────────────
+CLUSTERING
+──────────────────────────────────────────────────────────────────────
+
+36  K-Means
+└─ Customer Segmentation
+
+37  Hierarchical Clustering
+└─ Mall Customer Segmentation
+
+38  DBSCAN
+└─ Geographic / Location Clustering
+
+39  Gaussian Mixture Models
+└─ Customer Behavior Clustering
+
+──────────────────────────────────────────────────────────────────────
+DIMENSIONALITY REDUCTION
+──────────────────────────────────────────────────────────────────────
+
+40  PCA
+└─ High-Dimensional Dataset Visualization
+
+41  t-SNE
+└─ Embedding Visualization
+
+42  UMAP
+└─ Advanced Dimensionality Reduction
+
+──────────────────────────────────────────────────────────────────────
+ANOMALY DETECTION
+──────────────────────────────────────────────────────────────────────
+
+43  Isolation Forest
+└─ Transaction Anomaly Detection
+
+44  One-Class SVM
+└─ Network Anomaly Detector
+
+45  Local Outlier Factor
+└─ Fraudulent Transaction Detection
+
+══════════════════════════════════════════════════════════════════════
+STAGE 3 — DEEP LEARNING
+══════════════════════════════════════════════════════════════════════
+
+Goal: Understand neural networks from mathematical foundations to
+practical deep learning systems.
+
+──────────────────────────────────────────────────────────────────────
+46  Tensor Basics
+└─ Tensor Operations Playground
+
+47  Neural Network From Scratch
+└─ NumPy Neural Network
+
+48  Artificial Neural Network
+└─ MNIST Digit Classification
+
+49  Regularization
+└─ Overfitting Prevention Experiment
+
+50  Dropout
+└─ Dropout Comparison Project
+
+51  Batch Normalization
+└─ Training Stability Experiment
+
+52  Hyperparameter Tuning
+└─ Neural Network Optimization
+
+══════════════════════════════════════════════════════════════════════
+STAGE 4 — COMPUTER VISION
+══════════════════════════════════════════════════════════════════════
+
+Goal: Learn how machines understand images and video.
+
+──────────────────────────────────────────────────────────────────────
+53  CNN
+└─ Digit Recognition
+
+54  CNN
+└─ Cats vs Dogs Classifier
+
+55  Transfer Learning
+└─ Custom Image Classifier
+
+56  ResNet
+└─ ResNet Image Classification
+
+57  EfficientNet
+└─ Efficient Image Classifier
+
+58  MobileNet
+└─ Lightweight Image Classification
+
+59  YOLO
+└─ Real-Time Object Detection
+
+60  U-Net
+└─ Image Segmentation
+
+61  Object Tracking
+└─ Multi-Object Video Tracker
+
+62  OCR
+└─ Document Text Extraction
+
+63  Face Recognition
+└─ Face Identification System
+
+══════════════════════════════════════════════════════════════════════
+STAGE 5 — NATURAL LANGUAGE PROCESSING (NLP)
+══════════════════════════════════════════════════════════════════════
+
+Goal: Understand traditional NLP, sequence models, attention and
+modern language representations.
+
+──────────────────────────────────────────────────────────────────────
+64  Text Cleaning
+└─ Text Preprocessing Pipeline
+
+65  TF-IDF
+└─ Document Similarity Analyzer
+
+66  Word2Vec
+└─ Word Similarity Explorer
+
+67  GloVe
+└─ Word Embedding Analyzer
+
+68  FastText
+└─ Subword Text Classifier
+
+69  RNN
+└─ Text Sequence Predictor
+
+70  LSTM
+└─ Sentiment Classifier
+
+71  GRU
+└─ Text Classification
+
+72  Seq2Seq
+└─ Simple Text Translation
+
+73  Attention Mechanism
+└─ Attention Visualization
+
+74  Transformer
+└─ Transformer Text Classifier
+
+75  BERT
+└─ BERT Sentiment Classifier
+
+76  Sentence Transformers
+└─ Semantic Text Similarity
+
+77  Text Classification
+└─ News / Support Ticket Classifier
+
+78  Named Entity Recognition
+└─ Entity Extraction System
+
+79  Sentiment Analysis
+└─ Customer Review Sentiment Analyzer
+
+══════════════════════════════════════════════════════════════════════
+STAGE 6 — LLM ENGINEERING
+══════════════════════════════════════════════════════════════════════
+
+Goal: Learn how modern LLM applications are built.
+
+──────────────────────────────────────────────────────────────────────
+80  Prompt Engineering
+└─ Prompt Optimization Playground
+
+81  Function Calling
+└─ AI Tool-Using Assistant
+
+82  Structured Outputs
+└─ Structured Information Extractor
+
+83  Embeddings
+└─ Semantic Similarity Search
+
+84  Vector Database — FAISS
+└─ Document Vector Search
+
+85  Semantic Search
+└─ Semantic Document Finder
+
+86  RAG
+└─ PDF Question Answering System
+
+87  Hybrid Search
+└─ Keyword + Semantic Search
+
+88  Re-ranking
+└─ Search Result Re-ranking System
+
+89  LangChain
+└─ LangChain AI Assistant
+
+90  LlamaIndex
+└─ Document Intelligence Assistant
+
+91  Multi-Agent Systems
+└─ Collaborative AI Agents
+
+92  MCP
+└─ MCP Tool-Using Assistant
+
+93  AI Chatbot
+└─ Context-Aware AI Chatbot
+
+94  AI Document Assistant
+└─ Multi-Document AI Assistant
+
+══════════════════════════════════════════════════════════════════════
+STAGE 7 — TIME SERIES & FORECASTING
+══════════════════════════════════════════════════════════════════════
+
+Goal: Learn statistical and deep-learning approaches to forecasting.
+
+──────────────────────────────────────────────────────────────────────
+95  ARIMA
+└─ Sales Forecasting
+
+96  Prophet
+└─ Business Demand Forecasting
+
+97  LSTM Forecasting
+└─ Time Series Neural Network
+
+══════════════════════════════════════════════════════════════════════
+STAGE 8 — REINFORCEMENT LEARNING
+══════════════════════════════════════════════════════════════════════
+
+Goal: Understand learning through interaction and rewards.
+
+──────────────────────────────────────────────────────────────────────
+98  Q-Learning
+└─ Grid World Agent
+
+99  Deep Q-Network
+└─ Neural Network RL Agent
+
+100 CartPole Agent
+└─ End-to-End Reinforcement Learning Agent
+
+══════════════════════════════════════════════════════════════════════
+STAGE 9 — RECOMMENDATION SYSTEMS
+══════════════════════════════════════════════════════════════════════
+
+Goal: Learn how recommendation engines generate personalized results.
+
+──────────────────────────────────────────────────────────────────────
+101 Collaborative Filtering
+└─ Movie Recommendation System
+
+102 Content-Based Filtering
+└─ Product Recommendation System
+
+103 Matrix Factorization
+└─ Movie Rating Prediction
+
+══════════════════════════════════════════════════════════════════════
+STAGE 10 — GENERATIVE AI
+══════════════════════════════════════════════════════════════════════
+
+Goal: Understand the foundations of generative models.
+
+──────────────────────────────────────────────────────────────────────
+104 Autoencoders
+└─ Image Reconstruction
+
+105 Variational Autoencoders
+└─ VAE Image Generator
+
+106 GAN
+└─ Basic Image Generator
+
+107 Diffusion Models
+└─ Diffusion Model Introduction
+
+══════════════════════════════════════════════════════════════════════
+STAGE 11 — MLOps
+══════════════════════════════════════════════════════════════════════
+
+Goal: Learn how ML models are tracked, versioned, served, deployed
+and monitored.
+
+──────────────────────────────────────────────────────────────────────
+108 MLflow
+└─ Experiment Tracking System
+
+109 DVC
+└─ Dataset & Model Versioning
+
+110 FastAPI Model Serving
+└─ ML Prediction API
+
+111 Docker
+└─ Containerized ML Application
+
+112 CI/CD for ML
+└─ Automated ML Deployment Pipeline
+
+113 Model Monitoring
+└─ Production Model Monitoring
+
+══════════════════════════════════════════════════════════════════════
+STAGE 12 — END-TO-END AI PROJECTS
+══════════════════════════════════════════════════════════════════════
+
+Goal: Combine everything learned into production-style applications.
+
+──────────────────────────────────────────────────────────────────────
+114 House Price Prediction Platform
+└─ Data → ML → API → Deployment
+
+115 Medical Diagnosis System
+└─ Data → ML → Prediction Interface
+
+116 AI Resume Analyzer
+└─ NLP → LLM → Structured Analysis
+
+117 AI Legal Assistant
+└─ RAG → FAISS → LLM
+
+118 AI Research Assistant
+└─ Search → RAG → LLM → Citations
+
+119 AI Sports Analytics
+└─ Computer Vision → Tracking → Analytics
+
+120 AI Interview Coach
+└─ NLP → LLM → Evaluation
+
+121 Multi-Agent AI System
+└─ Multiple Specialized AI Agents
+
+122 AI SaaS Project
+└─ Full AI Product Architecture
+
+123 Production Deployment
+└─ End-to-End Production AI System
+
+══════════════════════════════════════════════════════════════════════
+LEARNING PRINCIPLES
+══════════════════════════════════════════════════════════════════════
+
+1. Learn by building.
+2. One major topic at a time.
+3. Every algorithm gets a practical implementation.
+4. Avoid learning libraries without understanding the underlying concept.
+5. Reuse previous knowledge in later projects.
+6. Keep every project documented on GitHub.
+7. Prefer realistic datasets over artificial toy examples when possible.
+8. After completing a technology's project series, study the technology
+   separately and fill any remaining gaps.
+9. Gradually move from notebooks → scripts → applications → deployment.
+10. The final projects combine multiple technologies learned earlier.
+
+══════════════════════════════════════════════════════════════════════
+PROJECT ORGANIZATION
+══════════════════════════════════════════════════════════════════════
+
+Each major technology should have its own GitHub repository.
+
+Example:
+
+```
+pandas-learning-projects/
+numpy-learning-projects/
+machine-learning-projects/
+deep-learning-projects/
+computer-vision-projects/
+nlp-learning-projects/
+llm-engineering-projects/
+mlops-projects/
+```
+
+Each project should preferably contain:
+
+```
+project/
+├── data/
+├── output/
+├── notebook.ipynb
+├── app.py / script.py
+└── README.md
+```
+
+══════════════════════════════════════════════════════════════════════
+FINAL GOAL
+══════════════════════════════════════════════════════════════════════
+
+Build a complete practical foundation across:
+
+```
+Data Science
+    ↓
+Machine Learning
+    ↓
+Deep Learning
+    ↓
+Computer Vision
+    ↓
+NLP
+    ↓
+LLM Engineering
+    ↓
+Time Series
+    ↓
+Reinforcement Learning
+    ↓
+Recommendation Systems
+    ↓
+Generative AI
+    ↓
+MLOps
+    ↓
+Production AI Systems
+```
+
+The end goal is not simply to complete 100+ projects.
+
+The goal is to understand the concepts deeply enough to design,
+implement, evaluate and deploy AI systems independently.
