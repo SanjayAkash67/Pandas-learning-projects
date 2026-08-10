@@ -68,7 +68,7 @@ Pandas/
 | 05  | Pivot Tables & Crosstabs       |    ✅   |
 | 06  | Time Series Analysis           |    ✅   |
 | 07  | String Operations              |    ✅   |
-| 08  | Large Dataset Analysis         |    ⏳   |
+| 08  | Large Dataset Analysis         |    ✅   |
 | 09  | Working with Excel Files       |    ⏳   |
 
 ---
