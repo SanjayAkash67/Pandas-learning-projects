@@ -1,698 +1,676 @@
-
-"""=========================================="""
-""" USE ONLY FOR REFERENCE NOT FOR EXECUTION """
-"""=========================================="""
-
-
 """
-PANDAS CHEAT SHEET
-==================
+🐼 PANDAS CHEAT SHEET — RUNNABLE LEARNING REFERENCE
+===================================================
 
-Purpose:
-    A syntax-first reference for the Pandas operations covered in the
-    Pandas Learning by Projects series.
+This is a SELF-CONTAINED, executable Pandas reference file.
 
-Important:
-    - This file contains syntax and explanations only.
-    - No dataset is required.
-    - Examples use generic DataFrame/Series names.
-    - Replace column names such as "Name", "Salary", "Revenue", etc.
-      with the columns in your own dataset.
+Unlike a syntax-only cheat sheet:
+    • It contains a small built-in demo dataset.
+    • Every section can be executed safely.
+    • Examples show BOTH code and what the operation means.
+    • No external dataset is required.
+    • No undefined df1 / df2 / summary / report variables.
+    • No file needs to exist before running the script.
 
-Series = one-dimensional labeled data
-DataFrame = two-dimensional labeled tabular data
+Run:
+    python pandas_cheatsheet.py
 
+The examples are intentionally small so this file is useful for
+learning and revision rather than benchmarking.
+
+Requirements:
+    pandas
+    numpy
+
+Excel examples use openpyxl when available. If it is not installed,
+the script skips only the Excel demonstration instead of crashing.
+
+Use this file as a reference:
+    1. Run it once to see the operations.
+    2. Find the section you need.
+    3. Copy/adapt the example for your own project.
 """
+
+import os
+import tempfile
+from io import StringIO, BytesIO
 
 import pandas as pd
 import numpy as np
 
 
-# ============================================================
-# 1. IMPORT
-# ============================================================
+# ================================================================
+# 0. DEMO DATA
+# ================================================================
 
-import pandas as pd
+def make_demo_data():
+    """Create small DataFrames used throughout the cheat sheet."""
 
-# Import NumPy when Pandas operations need numerical utilities.
-import numpy as np
+    employees = pd.DataFrame({
+        "EmployeeID": [101, 102, 103, 104, 105, 106],
+        "Name": ["Alice", "Bob", "Charlie", "Diana", "Evan", "Fiona"],
+        "Department": ["IT", "HR", "IT", "Sales", "Sales", "HR"],
+        "City": ["Chennai", "Coimbatore", "Chennai", "Bengaluru", "Chennai", "Coimbatore"],
+        "Age": [24, 31, 27, 35, 29, 42],
+        "Salary": [55000, 48000, 72000, 65000, 58000, 52000],
+        "JoinDate": pd.to_datetime([
+            "2023-01-10", "2022-05-15", "2021-08-20",
+            "2020-03-12", "2024-02-01", "2019-11-25"
+        ]),
+    })
+
+    sales = pd.DataFrame({
+        "OrderID": [1, 2, 3, 4, 5, 6, 7, 8],
+        "EmployeeID": [101, 102, 101, 104, 105, 103, 104, 106],
+        "Category": ["Laptop", "Phone", "Laptop", "Monitor", "Phone", "Keyboard", "Monitor", "Phone"],
+        "Quantity": [2, 3, 1, 2, 4, 5, 1, 2],
+        "Price": [70000, 25000, 70000, 18000, 25000, 3000, 18000, 25000],
+        "OrderDate": pd.to_datetime([
+            "2025-01-05", "2025-01-08", "2025-01-15", "2025-02-02",
+            "2025-02-10", "2025-03-01", "2025-03-12", "2025-03-20"
+        ])
+    })
+
+    dirty = pd.DataFrame({
+        "Name": [" Alice ", "Bob", "Bob", None, "Diana"],
+        "Department": ["IT", "HR", "HR", "Sales", None],
+        "Salary": [55000, 48000, 48000, np.nan, 65000],
+        "Email": ["alice@example.com", "bob@example.com", "bob@example.com",
+                  "charlie@example.com", None]
+    })
+
+    return employees, sales, dirty
 
 
-# ============================================================
-# 2. CREATE SERIES AND DATAFRAMES
-# ============================================================
+def section(title):
+    print("\n" + "=" * 72)
+    print(title)
+    print("=" * 72)
 
-# Create a Series
-s = pd.Series([10, 20, 30])
 
-# Create a Series with custom index
-s = pd.Series([10, 20, 30], index=["a", "b", "c"])
+employees, sales, dirty = make_demo_data()
+sales["Revenue"] = sales["Quantity"] * sales["Price"]
 
-# Create a DataFrame from a dictionary
-df = pd.DataFrame({
-    "Name": [],
-    "Age": [],
-    "Salary": []
+
+# ================================================================
+# 1. SERIES AND DATAFRAME
+# ================================================================
+
+section("1. CREATE SERIES AND DATAFRAMES")
+
+numbers = pd.Series([10, 20, 30])
+print("\nSeries:")
+print(numbers)
+
+named_numbers = pd.Series([10, 20, 30], index=["a", "b", "c"])
+print("\nSeries with custom index:")
+print(named_numbers)
+
+print("\nDataFrame:")
+print(employees.head())
+
+
+# ================================================================
+# 2. READ DATA
+# ================================================================
+
+section("2. READ CSV AND EXCEL")
+
+csv_text = """Name,Department,Salary
+Alice,IT,55000
+Bob,HR,48000
+Charlie,Sales,65000
+"""
+
+csv_df = pd.read_csv(StringIO(csv_text))
+print("\nReading CSV from an in-memory string:")
+print(csv_df)
+
+print("\nReading selected CSV columns:")
+print(pd.read_csv(StringIO(csv_text), usecols=["Name", "Salary"]))
+
+print("\nReading CSV with dtype:")
+typed = pd.read_csv(StringIO(csv_text), dtype={"Salary": "int64"})
+print(typed.dtypes)
+
+print("\nReading CSV in chunks:")
+for chunk in pd.read_csv(StringIO(csv_text), chunksize=2):
+    print(chunk)
+
+# Excel is demonstrated safely in memory when openpyxl is available.
+try:
+    excel_buffer = BytesIO()
+    with pd.ExcelWriter(excel_buffer, engine="openpyxl") as writer:
+        csv_df.to_excel(writer, sheet_name="Employees", index=False)
+    excel_buffer.seek(0)
+
+    excel_df = pd.read_excel(excel_buffer, sheet_name="Employees")
+    print("\nReading Excel:")
+    print(excel_df)
+except (ImportError, ModuleNotFoundError):
+    print("\nExcel demo skipped: install openpyxl to enable it.")
+
+
+# ================================================================
+# 3. WRITE / EXPORT
+# ================================================================
+
+section("3. WRITE / EXPORT DATA")
+
+with tempfile.TemporaryDirectory() as temp_dir:
+    csv_path = os.path.join(temp_dir, "demo.csv")
+    xlsx_path = os.path.join(temp_dir, "demo.xlsx")
+
+    employees.to_csv(csv_path, index=False)
+    print("\nCSV exported successfully:", csv_path)
+
+    try:
+        employees.to_excel(xlsx_path, index=False, engine="openpyxl")
+        print("Excel exported successfully:", xlsx_path)
+    except (ImportError, ModuleNotFoundError):
+        print("Excel export skipped: install openpyxl to enable it.")
+
+    # Multiple Excel sheets
+    try:
+        report_path = os.path.join(temp_dir, "report.xlsx")
+        with pd.ExcelWriter(report_path, engine="openpyxl") as writer:
+            employees.to_excel(writer, sheet_name="Employees", index=False)
+            sales.to_excel(writer, sheet_name="Sales", index=False)
+        print("Multi-sheet Excel report created:", report_path)
+    except (ImportError, ModuleNotFoundError):
+        print("Multi-sheet Excel demo skipped: install openpyxl.")
+
+
+# ================================================================
+# 4. INSPECT DATA
+# ================================================================
+
+section("4. INSPECT DATA")
+
+print("\nhead():")
+print(employees.head(3))
+
+print("\ntail():")
+print(employees.tail(2))
+
+print("\nsample():")
+print(employees.sample(2, random_state=42))
+
+print("\nshape:", employees.shape)
+print("ndim:", employees.ndim)
+print("size:", employees.size)
+print("\ncolumns:")
+print(employees.columns.tolist())
+
+print("\nindex:")
+print(employees.index)
+
+print("\ndtypes:")
+print(employees.dtypes)
+
+print("\ninfo():")
+employees.info()
+
+print("\ndescribe():")
+print(employees.describe())
+
+print("\ndescribe(include='all'):")
+print(employees.describe(include="all"))
+
+
+# ================================================================
+# 5. SELECT COLUMNS
+# ================================================================
+
+section("5. SELECT COLUMNS")
+
+print("\nOne column:")
+print(employees["Name"])
+
+print("\nMultiple columns:")
+print(employees[["Name", "Department", "Salary"]])
+
+print("\nAttribute syntax:")
+print(employees.Salary)
+
+
+# ================================================================
+# 6. SELECT ROWS — iloc / loc
+# ================================================================
+
+section("6. SELECT ROWS — iloc AND loc")
+
+print("\niloc[0]:")
+print(employees.iloc[0])
+
+print("\niloc[0:3]:")
+print(employees.iloc[0:3])
+
+print("\niloc[[0, 2, 4]]:")
+print(employees.iloc[[0, 2, 4]])
+
+print("\niloc rows and columns:")
+print(employees.iloc[0:3, 0:3])
+
+print("\nloc by label:")
+print(employees.loc[0])
+
+print("\nloc with condition:")
+print(employees.loc[employees["Salary"] > 60000])
+
+print("\nloc with rows and selected columns:")
+print(employees.loc[
+    employees["Salary"] > 60000,
+    ["Name", "Department", "Salary"]
+])
+
+
+# ================================================================
+# 7. INDEX OPERATIONS
+# ================================================================
+
+section("7. INDEX OPERATIONS")
+
+indexed = employees.set_index("EmployeeID")
+print("\nset_index():")
+print(indexed)
+
+reset = indexed.reset_index()
+print("\nreset_index():")
+print(reset)
+
+reset_drop = indexed.reset_index(drop=True)
+print("\nreset_index(drop=True):")
+print(reset_drop)
+
+named_index = employees.copy()
+named_index.index.name = "RowNumber"
+print("\nNamed index:")
+print(named_index.index)
+
+
+# ================================================================
+# 8. RENAME COLUMNS
+# ================================================================
+
+section("8. RENAME COLUMNS")
+
+renamed = employees.rename(columns={
+    "Name": "EmployeeName",
+    "Salary": "AnnualSalary"
 })
+print("\nSelected columns renamed:")
+print(renamed.head())
 
-# Create an empty DataFrame
-df = pd.DataFrame()
-
-
-# ============================================================
-# 3. READ DATA
-# ============================================================
-
-# Read CSV
-df = pd.read_csv("file.csv")
-
-# Read CSV with selected columns
-df = pd.read_csv(
-    "file.csv",
-    usecols=["Name", "Salary"]
-)
-
-# Read CSV with explicit data types
-df = pd.read_csv(
-    "file.csv",
-    dtype={"EmployeeID": "int32"}
-)
-
-# Read CSV in chunks for large datasets
-chunks = pd.read_csv(
-    "file.csv",
-    chunksize=10000
-)
-
-# Read Excel
-df = pd.read_excel(
-    "file.xlsx",
-    sheet_name="Sheet1"
-)
-
-# Read all Excel sheets into a dictionary of DataFrames
-all_sheets = pd.read_excel(
-    "file.xlsx",
-    sheet_name=None
-)
-
-# Work with an Excel workbook
-excel_file = pd.ExcelFile("file.xlsx")
-
-# List sheet names
-excel_file.sheet_names
-
-# Read a sheet from an ExcelFile object
-df = pd.read_excel(
-    excel_file,
-    sheet_name="Sheet1"
-)
-
-# Read only selected Excel columns
-df = pd.read_excel(
-    "file.xlsx",
-    usecols=["Name", "Salary"]
-)
-
-# Skip rows while reading
-df = pd.read_excel(
-    "file.xlsx",
-    skiprows=2
-)
-
-# Read only a limited number of rows
-df = pd.read_excel(
-    "file.xlsx",
-    nrows=100
-)
-
-# Treat custom values as missing values
-df = pd.read_excel(
-    "file.xlsx",
-    na_values=["N/A", "NA", "-", "Unknown"]
-)
-
+lowercase = employees.copy()
+lowercase.columns = lowercase.columns.str.lower()
+print("\nLowercase column names:")
+print(lowercase.columns.tolist())
 
-# ============================================================
-# 4. WRITE / EXPORT DATA
-# ============================================================
+spaced = employees.copy()
+spaced.columns = [" EmployeeID ", " Name ", " Department ",
+                  " City ", " Age ", " Salary ", " JoinDate "]
+spaced.columns = spaced.columns.str.strip()
+print("\nStripped column names:")
+print(spaced.columns.tolist())
 
-# Write DataFrame to CSV
-df.to_csv(
-    "output.csv",
-    index=False
-)
 
-# Write DataFrame to Excel
-df.to_excel(
-    "output.xlsx",
-    index=False
-)
+# ================================================================
+# 9. DATA TYPES
+# ================================================================
 
-# Write multiple DataFrames to multiple Excel sheets
-with pd.ExcelWriter("report.xlsx") as writer:
-    df.to_excel(
-        writer,
-        sheet_name="Data",
-        index=False
-    )
+section("9. DATA TYPES")
 
-# Example of multiple sheets
-with pd.ExcelWriter("report.xlsx") as writer:
-    summary.to_excel(
-        writer,
-        sheet_name="Summary",
-        index=False
-    )
+print("\nCurrent dtypes:")
+print(employees.dtypes)
 
-    report.to_excel(
-        writer,
-        sheet_name="Report",
-        index=False
-    )
+typed = employees.copy()
+typed["Age"] = typed["Age"].astype("int64")
+typed["Name"] = typed["Name"].astype("string")
+typed["Department"] = typed["Department"].astype("category")
+typed["Salary"] = pd.to_numeric(typed["Salary"], errors="coerce")
+typed["JoinDate"] = pd.to_datetime(typed["JoinDate"], errors="coerce")
 
+print("\nAfter conversions:")
+print(typed.dtypes)
 
-# ============================================================
-# 5. INSPECT DATA
-# ============================================================
 
-# First rows
-df.head()
+# ================================================================
+# 10. MISSING VALUES
+# ================================================================
 
-# First N rows
-df.head(10)
+section("10. MISSING VALUES")
 
-# Last rows
-df.tail()
+print("\nisna():")
+print(dirty.isna())
 
-# Last N rows
-df.tail(10)
+print("\nMissing count:")
+print(dirty.isna().sum())
 
-# Random rows
-df.sample(5)
+print("\nMissing percentage:")
+print((dirty.isna().mean() * 100).round(2))
 
-# Number of rows and columns
-df.shape
+print("\nAny missing in each column:")
+print(dirty.isna().any())
 
-# Number of dimensions
-df.ndim
+print("\nAny missing anywhere:")
+print(dirty.isna().any().any())
 
-# Number of elements
-df.size
+print("\nRows where Salary is missing:")
+print(dirty[dirty["Salary"].isna()])
 
-# Column names
-df.columns
+print("\nRows where Salary is not missing:")
+print(dirty[dirty["Salary"].notna()])
 
-# Row index
-df.index
+print("\nFill Salary with 0:")
+print(dirty["Salary"].fillna(0))
 
-# Data types
-df.dtypes
+print("\nFill Salary with mean:")
+print(dirty["Salary"].fillna(dirty["Salary"].mean()))
 
-# DataFrame information
-df.info()
+print("\nFill Salary with median:")
+print(dirty["Salary"].fillna(dirty["Salary"].median()))
 
-# Statistical summary for numerical columns
-df.describe()
+print("\nFill Department with mode:")
+print(dirty["Department"].fillna(dirty["Department"].mode()[0]))
 
-# Statistical summary including non-numerical columns
-df.describe(include="all")
+print("\nForward fill:")
+print(dirty.ffill())
 
+print("\nBackward fill:")
+print(dirty.bfill())
 
-# ============================================================
-# 6. SELECT COLUMNS
-# ============================================================
+print("\nDrop rows containing missing values:")
+print(dirty.dropna())
 
-# Select one column
-df["Name"]
+print("\nDrop rows missing Salary or Department:")
+print(dirty.dropna(subset=["Salary", "Department"]))
 
-# Select multiple columns
-df[["Name", "Age", "Salary"]]
 
-# Select using attribute syntax
-df.Salary
+# ================================================================
+# 11. DUPLICATES
+# ================================================================
 
-# Note:
-# df["Salary"] is preferred because it works reliably with all
-# valid column names.
+section("11. DUPLICATES")
 
+print("\nDuplicate mask:")
+print(dirty.duplicated())
 
-# ============================================================
-# 7. SELECT ROWS
-# ============================================================
+print("\nDuplicate count:")
+print(dirty.duplicated().sum())
 
-# Select by integer position
-df.iloc[0]
+print("\nDuplicate rows:")
+print(dirty[dirty.duplicated()])
 
-# Select multiple rows by position
-df.iloc[0:5]
+print("\nAfter removing duplicates:")
+print(dirty.drop_duplicates())
 
-# Select specific rows
-df.iloc[[0, 2, 5]]
+print("\nDuplicates based on Email:")
+print(dirty.duplicated(subset=["Email"]))
 
-# Select specific rows and columns by position
-df.iloc[0:5, 0:3]
+print("\nKeep last duplicate:")
+print(dirty.drop_duplicates(subset=["Email"], keep="last"))
 
-# Select by label
-df.loc[0]
 
-# Select rows using a label condition
-df.loc[df["Salary"] > 50000]
+# ================================================================
+# 12. FILTERING
+# ================================================================
 
-# Select specific rows and columns by labels
-df.loc[
-    df["Salary"] > 50000,
-    ["Name", "Salary"]
-]
+section("12. FILTERING")
 
+print("\nSalary > 50000:")
+print(employees[employees["Salary"] > 50000])
 
-# ============================================================
-# 8. INDEX OPERATIONS
-# ============================================================
+print("\nDepartment == IT:")
+print(employees[employees["Department"] == "IT"])
 
-# Set a column as the index
-df = df.set_index("EmployeeID")
+print("\nDepartment != IT:")
+print(employees[employees["Department"] != "IT"])
 
-# Reset index
-df = df.reset_index()
+print("\nAge >= 30:")
+print(employees[employees["Age"] >= 30])
 
-# Reset index without keeping old index
-df = df.reset_index(drop=True)
+print("\nSalary <= 60000:")
+print(employees[employees["Salary"] <= 60000])
 
-# Rename index
-df.index.name = "ID"
+print("\nAND condition:")
+print(employees[
+    (employees["Salary"] > 50000) &
+    (employees["Age"] > 25)
+])
 
+print("\nOR condition:")
+print(employees[
+    (employees["Department"] == "IT") |
+    (employees["Department"] == "HR")
+])
 
-# ============================================================
-# 9. RENAME COLUMNS
-# ============================================================
+print("\nNOT condition:")
+print(employees[~(employees["Department"] == "IT")])
 
-# Rename selected columns
-df = df.rename(
-    columns={
-        "old_name": "new_name"
-    }
-)
+print("\nisin():")
+print(employees[employees["Department"].isin(["IT", "HR"])])
 
-# Rename all columns
-df.columns = [
-    "Column1",
-    "Column2",
-    "Column3"
-]
+print("\nExclude using ~isin():")
+print(employees[~employees["Department"].isin(["IT", "HR"])])
 
-# Convert column names to lowercase
-df.columns = df.columns.str.lower()
+print("\nbetween():")
+print(employees[employees["Salary"].between(50000, 70000)])
 
-# Remove leading/trailing spaces from column names
-df.columns = df.columns.str.strip()
+print("\nquery():")
+print(employees.query("Salary > 50000"))
 
+print("\nquery() with multiple conditions:")
+print(employees.query("Salary > 50000 and Age >= 25"))
 
-# ============================================================
-# 10. DATA TYPES
-# ============================================================
 
-# Check data types
-df.dtypes
+# ================================================================
+# 13. SORTING
+# ================================================================
 
-# Convert a column
-df["Age"] = df["Age"].astype("int64")
+section("13. SORTING")
 
-# Convert to string
-df["Name"] = df["Name"].astype("string")
+print("\nAscending:")
+print(employees.sort_values("Salary"))
 
-# Convert to category
-df["Department"] = df["Department"].astype("category")
+print("\nDescending:")
+print(employees.sort_values("Salary", ascending=False))
 
-# Convert to numeric safely
-df["Salary"] = pd.to_numeric(
-    df["Salary"],
-    errors="coerce"
-)
-
-# Convert to datetime
-df["Date"] = pd.to_datetime(
-    df["Date"],
-    errors="coerce"
-)
-
-
-# ============================================================
-# 11. MISSING VALUES
-# ============================================================
-
-# Detect missing values
-df.isna()
-
-# Count missing values by column
-df.isna().sum()
-
-# Alternative
-df.isnull().sum()
-
-# Check whether any value is missing in each column
-df.isna().any()
-
-# Check whether the entire DataFrame contains missing values
-df.isna().any().any()
-
-# Select rows containing missing values
-df[df["Salary"].isna()]
-
-# Select rows where values are NOT missing
-df[df["Salary"].notna()]
-
-# Drop rows containing any missing value
-df = df.dropna()
-
-# Drop rows only when specific columns are missing
-df = df.dropna(
-    subset=["Salary", "Department"]
-)
-
-# Drop columns containing missing values
-df = df.dropna(axis=1)
-
-# Fill missing values with a constant
-df["Salary"] = df["Salary"].fillna(0)
-
-# Fill with mean
-df["Salary"] = df["Salary"].fillna(
-    df["Salary"].mean()
-)
-
-# Fill with median
-df["Salary"] = df["Salary"].fillna(
-    df["Salary"].median()
-)
-
-# Fill with mode
-df["Department"] = df["Department"].fillna(
-    df["Department"].mode()[0]
-)
-
-# Forward fill
-df = df.ffill()
-
-# Backward fill
-df = df.bfill()
-
-
-# ============================================================
-# 12. DUPLICATES
-# ============================================================
-
-# Detect duplicate rows
-df.duplicated()
-
-# Count duplicate rows
-df.duplicated().sum()
-
-# Remove duplicate rows
-df = df.drop_duplicates()
-
-# Detect duplicates based on selected columns
-df.duplicated(
-    subset=["Email"]
-)
-
-# Remove duplicates based on selected columns
-df = df.drop_duplicates(
-    subset=["Email"]
-)
-
-# Keep the last duplicate instead of the first
-df = df.drop_duplicates(
-    subset=["Email"],
-    keep="last"
-)
-
-
-# ============================================================
-# 13. FILTERING
-# ============================================================
-
-# One condition
-df[df["Salary"] > 50000]
-
-# Equal to
-df[df["Department"] == "IT"]
-
-# Not equal to
-df[df["Department"] != "IT"]
-
-# Greater than or equal
-df[df["Age"] >= 18]
-
-# Less than or equal
-df[df["Salary"] <= 100000]
-
-# Multiple conditions: AND
-df[
-    (df["Salary"] > 50000) &
-    (df["Age"] > 25)
-]
-
-# Multiple conditions: OR
-df[
-    (df["Department"] == "IT") |
-    (df["Department"] == "HR")
-]
-
-# NOT
-df[
-    ~(df["Department"] == "IT")
-]
-
-# Membership filtering
-df[df["Department"].isin(["IT", "HR"])]
-
-# Exclude values using ~
-df[
-    ~df["Department"].isin(["IT", "HR"])
-]
-
-# Range filtering
-df[
-    df["Salary"].between(50000, 100000)
-]
-
-# Query syntax
-df.query("Salary > 50000")
-
-# Multiple query conditions
-df.query(
-    "Salary > 50000 and Age >= 25"
-)
-
-
-# ============================================================
-# 14. SORTING
-# ============================================================
-
-# Sort ascending
-df = df.sort_values("Salary")
-
-# Sort descending
-df = df.sort_values(
-    "Salary",
-    ascending=False
-)
-
-# Sort by multiple columns
-df = df.sort_values(
+print("\nMultiple columns:")
+print(employees.sort_values(
     ["Department", "Salary"],
     ascending=[True, False]
-)
+))
 
-# Sort by index
-df = df.sort_index()
+print("\nSort by index:")
+print(employees.sort_index())
 
-# Smallest N values
-df.nsmallest(
-    5,
-    "Salary"
-)
+print("\nSmallest 3 salaries:")
+print(employees.nsmallest(3, "Salary"))
 
-# Largest N values
-df.nlargest(
-    5,
-    "Salary"
-)
+print("\nLargest 3 salaries:")
+print(employees.nlargest(3, "Salary"))
 
 
-# ============================================================
-# 15. VALUE COUNTS
-# ============================================================
+# ================================================================
+# 14. VALUE COUNTS / UNIQUE
+# ================================================================
 
-# Count unique values
-df["Department"].value_counts()
+section("14. VALUE COUNTS / UNIQUE VALUES")
 
-# Include missing values
-df["Department"].value_counts(
-    dropna=False
-)
+print("\nvalue_counts():")
+print(employees["Department"].value_counts())
 
-# Normalize into proportions
-df["Department"].value_counts(
-    normalize=True
-)
+print("\nInclude missing values:")
+print(dirty["Department"].value_counts(dropna=False))
 
-# Sort by index
-df["Department"].value_counts().sort_index()
+print("\nNormalized value_counts():")
+print(employees["Department"].value_counts(normalize=True).round(3))
 
+print("\nSorted by index:")
+print(employees["Department"].value_counts().sort_index())
 
-# ============================================================
-# 16. UNIQUE VALUES
-# ============================================================
+print("\nunique():")
+print(employees["Department"].unique())
 
-# Unique values
-df["Department"].unique()
+print("\nnunique():")
+print(employees["Department"].nunique())
 
-# Number of unique values
-df["Department"].nunique()
-
-# Include missing values in count
-df["Department"].nunique(
-    dropna=False
-)
+print("\nnunique(dropna=False):")
+print(dirty["Department"].nunique(dropna=False))
 
 
-# ============================================================
-# 17. BASIC STATISTICS
-# ============================================================
+# ================================================================
+# 15. BASIC STATISTICS
+# ================================================================
 
-df["Salary"].sum()
-df["Salary"].mean()
-df["Salary"].median()
-df["Salary"].min()
-df["Salary"].max()
-df["Salary"].std()
-df["Salary"].var()
+section("15. BASIC STATISTICS")
 
-# Count non-missing values
-df["Salary"].count()
+salary = employees["Salary"]
 
-# Quantile
-df["Salary"].quantile(0.25)
-df["Salary"].quantile(0.50)
-df["Salary"].quantile(0.75)
+print("sum:", salary.sum())
+print("mean:", salary.mean())
+print("median:", salary.median())
+print("min:", salary.min())
+print("max:", salary.max())
+print("std:", salary.std())
+print("variance:", salary.var())
+print("count:", salary.count())
 
-# Multiple quantiles
-df["Salary"].quantile(
-    [0.25, 0.50, 0.75]
-)
+print("\nQuantiles:")
+print(salary.quantile([0.25, 0.50, 0.75]))
 
 
-# ============================================================
-# 18. CREATE / MODIFY COLUMNS
-# ============================================================
+# ================================================================
+# 16. CREATE / MODIFY COLUMNS
+# ================================================================
 
-# Create a calculated column
-df["Revenue"] = (
-    df["Quantity"] *
-    df["Price"]
-)
+section("16. CREATE / MODIFY COLUMNS")
 
-# Create a column using a condition
-df["Status"] = (
-    df["Salary"] > 50000
+work = employees.copy()
+
+work["AnnualBonus"] = work["Salary"] * 0.10
+print("\nCalculated column:")
+print(work[["Name", "Salary", "AnnualBonus"]])
+
+work["SalaryLevel"] = (
+    work["Salary"] > 60000
 ).map({
     True: "High",
-    False: "Low"
+    False: "Standard"
 })
+print("\nConditional column:")
+print(work[["Name", "Salary", "SalaryLevel"]])
 
-# Modify an existing column
-df["Salary"] = df["Salary"] * 1.10
+work["Salary"] = work["Salary"] * 1.05
+print("\nModified salary:")
+print(work[["Name", "Salary"]])
 
-# Drop a column
-df = df.drop(
-    columns=["Status"]
-)
-
-# Drop multiple columns
-df = df.drop(
-    columns=["Status", "TemporaryColumn"]
-)
+work = work.drop(columns=["SalaryLevel"])
+print("\nAfter dropping a column:")
+print(work.columns.tolist())
 
 
-# ============================================================
-# 19. APPLY
-# ============================================================
+# ================================================================
+# 17. APPLY
+# ================================================================
 
-# Apply a function to a Series
-df["Salary"] = df["Salary"].apply(
+section("17. APPLY")
+
+apply_demo = employees.copy()
+
+apply_demo["SalaryWithBonus"] = apply_demo["Salary"].apply(
     lambda x: x * 1.10
 )
 
-# Apply a function row-wise
-def classify(row):
-    if row["Salary"] > 50000:
-        return "High"
-    return "Low"
+print("\nSeries apply:")
+print(apply_demo[["Name", "Salary", "SalaryWithBonus"]])
 
-df["SalaryLevel"] = df.apply(
-    classify,
+
+def classify_employee(row):
+    if row["Salary"] >= 60000:
+        return "High"
+    return "Standard"
+
+
+apply_demo["SalaryLevel"] = apply_demo.apply(
+    classify_employee,
     axis=1
 )
 
-# axis=0 -> operate column-wise
-# axis=1 -> operate row-wise
+print("\nRow-wise apply:")
+print(apply_demo[["Name", "Salary", "SalaryLevel"]])
+
+print("\naxis=0 -> column-wise")
+print("axis=1 -> row-wise")
 
 
-# ============================================================
-# 20. MAP
-# ============================================================
+# ================================================================
+# 18. MAP
+# ================================================================
 
-# Replace values using a dictionary
-df["Department"] = df["Department"].map({
+section("18. MAP")
+
+mapped = employees.copy()
+
+mapped["Department"] = mapped["Department"].map({
     "IT": "Technology",
-    "HR": "Human Resources"
+    "HR": "Human Resources",
+    "Sales": "Sales"
 })
 
-# Boolean mapping
-df["Status"] = df["Status"].map({
+print("\nDictionary mapping:")
+print(mapped[["Name", "Department"]])
+
+boolean_series = pd.Series([True, False, True, False])
+print("\nBoolean mapping:")
+print(boolean_series.map({
     True: "Yes",
     False: "No"
-})
+}))
 
 
-# ============================================================
-# 21. GROUPBY
-# ============================================================
+# ================================================================
+# 19. GROUPBY
+# ================================================================
 
-# Group by one column
-df.groupby("Department")
+section("19. GROUPBY")
 
-# Group and calculate sum
-df.groupby("Department")["Salary"].sum()
+print("\nGroupBy object:")
+print(employees.groupby("Department"))
 
-# Group and calculate mean
-df.groupby("Department")["Salary"].mean()
+print("\nSum:")
+print(employees.groupby("Department")["Salary"].sum())
 
-# Group and calculate multiple statistics
-df.groupby("Department")["Salary"].agg(
-    ["sum", "mean", "min", "max"]
+print("\nMean:")
+print(employees.groupby("Department")["Salary"].mean())
+
+print("\nMultiple statistics:")
+print(
+    employees.groupby("Department")["Salary"]
+    .agg(["sum", "mean", "min", "max"])
 )
 
-# Group by multiple columns
-df.groupby(
-    ["Department", "City"]
-)["Salary"].sum()
+print("\nMultiple grouping columns:")
+print(
+    employees.groupby(["Department", "City"])["Salary"].sum()
+)
 
-# Return group keys as normal columns
-df.groupby(
-    "Department",
-    as_index=False
-)["Salary"].sum()
+print("\nas_index=False:")
+print(
+    employees.groupby("Department", as_index=False)["Salary"].sum()
+)
 
 
-# ============================================================
-# 22. AGGREGATION WITH NAMED OUTPUTS
-# ============================================================
+# ================================================================
+# 20. AGGREGATION WITH NAMED OUTPUTS
+# ================================================================
 
-report = (
-    df.groupby("Department")
+section("20. NAMED AGGREGATION")
+
+employee_report = (
+    employees
+    .groupby("Department")
     .agg(
         TotalSalary=("Salary", "sum"),
         AverageSalary=("Salary", "mean"),
@@ -703,826 +681,657 @@ report = (
     .reset_index()
 )
 
+print(employee_report)
 
-# ============================================================
-# 23. MULTIPLE AGGREGATIONS
-# ============================================================
 
-report = (
-    df.groupby("Category")
+# ================================================================
+# 21. MULTIPLE AGGREGATIONS
+# ================================================================
+
+section("21. MULTIPLE AGGREGATIONS")
+
+sales_report = (
+    sales
+    .groupby("Category")
     .agg({
         "Revenue": ["sum", "mean", "max"],
         "Quantity": ["sum", "mean"]
     })
 )
 
+print(sales_report)
 
-# ============================================================
-# 24. MERGE / JOIN
-# ============================================================
 
-# Inner join
-merged = pd.merge(
-    df1,
-    df2,
-    on="EmployeeID",
-    how="inner"
-)
+# ================================================================
+# 22. MERGE / JOIN
+# ================================================================
 
-# Left join
-merged = pd.merge(
-    df1,
-    df2,
-    on="EmployeeID",
+section("22. MERGE / JOIN")
+
+departments = pd.DataFrame({
+    "Department": ["IT", "HR", "Sales"],
+    "Manager": ["Kumar", "Priya", "Arun"]
+})
+
+print("\nInner merge:")
+print(pd.merge(employees, departments, on="Department", how="inner"))
+
+print("\nLeft merge:")
+print(pd.merge(employees, departments, on="Department", how="left"))
+
+print("\nRight merge:")
+print(pd.merge(employees, departments, on="Department", how="right"))
+
+print("\nOuter merge:")
+print(pd.merge(employees, departments, on="Department", how="outer"))
+
+different_key = departments.rename(columns={"Department": "Dept"})
+print("\nDifferent key names:")
+print(pd.merge(
+    employees,
+    different_key,
+    left_on="Department",
+    right_on="Dept",
     how="left"
-)
+))
 
-# Right join
-merged = pd.merge(
-    df1,
-    df2,
-    on="EmployeeID",
-    how="right"
-)
-
-# Outer join
-merged = pd.merge(
-    df1,
-    df2,
-    on="EmployeeID",
-    how="outer"
-)
-
-# Different column names
-merged = pd.merge(
-    df1,
-    df2,
-    left_on="EmployeeID",
-    right_on="ID",
-    how="left"
-)
-
-# Merge using multiple columns
-merged = pd.merge(
-    df1,
-    df2,
-    on=["EmployeeID", "Department"],
-    how="left"
-)
-
-# Add merge indicator
-merged = pd.merge(
-    df1,
-    df2,
-    on="EmployeeID",
+print("\nMerge using indicator:")
+print(pd.merge(
+    employees,
+    departments,
+    on="Department",
     how="outer",
     indicator=True
-)
+))
 
-# Control overlapping column names
-merged = pd.merge(
-    df1,
-    df2,
+
+# ================================================================
+# 23. CONCAT
+# ================================================================
+
+section("23. CONCAT")
+
+part1 = employees.iloc[:3]
+part2 = employees.iloc[3:]
+
+print("\nVertical concat:")
+print(pd.concat([part1, part2], axis=0, ignore_index=True))
+
+print("\nHorizontal concat:")
+small_left = employees[["EmployeeID", "Name"]].reset_index(drop=True)
+small_right = employees[["Department", "Salary"]].reset_index(drop=True)
+print(pd.concat([small_left, small_right], axis=1))
+
+
+# ================================================================
+# 24. PIVOT TABLE
+# ================================================================
+
+section("24. PIVOT TABLES")
+
+print("\nBasic pivot:")
+print(pd.pivot_table(
+    sales,
+    values="Revenue",
+    index="Category",
+    aggfunc="sum"
+))
+
+print("\nPivot with columns:")
+sales_with_dept = sales.merge(
+    employees[["EmployeeID", "Department"]],
     on="EmployeeID",
-    suffixes=("_employee", "_sales")
+    how="left"
 )
 
-
-# ============================================================
-# 25. CONCAT
-# ============================================================
-
-# Stack DataFrames vertically
-combined = pd.concat(
-    [df1, df2],
-    axis=0
-)
-
-# Combine side-by-side
-combined = pd.concat(
-    [df1, df2],
-    axis=1
-)
-
-# Reset the index after vertical concatenation
-combined = pd.concat(
-    [df1, df2],
-    ignore_index=True
-)
-
-
-# ============================================================
-# 26. PIVOT TABLES
-# ============================================================
-
-# Basic pivot table
-pivot = pd.pivot_table(
-    df,
+print(pd.pivot_table(
+    sales_with_dept,
     values="Revenue",
     index="Department",
-    aggfunc="sum"
-)
-
-# Add columns dimension
-pivot = pd.pivot_table(
-    df,
-    values="Revenue",
-    index="Department",
-    columns="City",
-    aggfunc="sum"
-)
-
-# Fill missing combinations
-pivot = pd.pivot_table(
-    df,
-    values="Revenue",
-    index="Department",
-    columns="City",
+    columns="Category",
     aggfunc="sum",
     fill_value=0
-)
+))
 
-# Multiple aggregation functions
-pivot = pd.pivot_table(
-    df,
+print("\nMultiple aggregation functions:")
+print(pd.pivot_table(
+    sales_with_dept,
     values="Revenue",
     index="Department",
     aggfunc=["sum", "mean", "max"]
-)
+))
 
-# Multiple values
-pivot = pd.pivot_table(
-    df,
+print("\nMultiple values:")
+print(pd.pivot_table(
+    sales_with_dept,
     values=["Revenue", "Quantity"],
     index="Department",
     aggfunc="sum"
-)
+))
 
-# Add grand totals
-pivot = pd.pivot_table(
-    df,
+print("\nGrand totals:")
+print(pd.pivot_table(
+    sales_with_dept,
     values="Revenue",
     index="Department",
-    columns="City",
+    columns="Category",
     aggfunc="sum",
     fill_value=0,
     margins=True
-)
-
-# Convert pivot index back to columns
-pivot = pivot.reset_index()
+))
 
 
-# ============================================================
-# 27. CROSSTAB
-# ============================================================
+# ================================================================
+# 25. CROSSTAB
+# ================================================================
 
-# Frequency table
-cross = pd.crosstab(
-    df["Department"],
-    df["City"]
-)
+section("25. CROSSTAB")
 
-# Normalize by row
-cross = pd.crosstab(
-    df["Department"],
-    df["City"],
+print("\nFrequency table:")
+print(pd.crosstab(
+    employees["Department"],
+    employees["City"]
+))
+
+print("\nNormalize by row:")
+print(pd.crosstab(
+    employees["Department"],
+    employees["City"],
     normalize="index"
-)
+))
 
-# Normalize by column
-cross = pd.crosstab(
-    df["Department"],
-    df["City"],
+print("\nNormalize by column:")
+print(pd.crosstab(
+    employees["Department"],
+    employees["City"],
     normalize="columns"
-)
+))
 
-# Normalize over entire table
-cross = pd.crosstab(
-    df["Department"],
-    df["City"],
+print("\nNormalize overall:")
+print(pd.crosstab(
+    employees["Department"],
+    employees["City"],
     normalize="all"
+))
+
+
+# ================================================================
+# 26. DATETIME
+# ================================================================
+
+section("26. DATETIME OPERATIONS")
+
+dates = pd.DataFrame({
+    "Date": pd.to_datetime([
+        "2025-01-05 10:30",
+        "2025-02-15 14:45",
+        "2025-03-20 09:15",
+        "2025-04-25 18:00"
+    ]),
+    "Revenue": [10000, 15000, 12000, 18000]
+})
+
+dates["Year"] = dates["Date"].dt.year
+dates["Month"] = dates["Date"].dt.month
+dates["MonthName"] = dates["Date"].dt.month_name()
+dates["Day"] = dates["Date"].dt.day
+dates["DayName"] = dates["Date"].dt.day_name()
+dates["Weekday"] = dates["Date"].dt.weekday
+dates["Quarter"] = dates["Date"].dt.quarter
+dates["Hour"] = dates["Date"].dt.hour
+dates["Minute"] = dates["Date"].dt.minute
+
+dates["MonthStart"] = (
+    dates["Date"].dt.to_period("M").dt.start_time
+)
+dates["MonthEnd"] = (
+    dates["Date"].dt.to_period("M").dt.end_time
 )
 
-# Crosstab with values and aggregation
-cross = pd.crosstab(
-    df["Department"],
-    df["City"],
-    values=df["Revenue"],
-    aggfunc="sum"
-)
+print(dates)
 
 
-# ============================================================
-# 28. DATETIME / TIME SERIES
-# ============================================================
+# ================================================================
+# 27. DATE FILTERING
+# ================================================================
 
-# Convert to datetime
-df["Date"] = pd.to_datetime(
-    df["Date"]
-)
+section("27. DATE FILTERING")
 
-# Extract year
-df["Year"] = df["Date"].dt.year
+print("\nAfter date:")
+print(dates[dates["Date"] >= "2025-02-01"])
 
-# Extract month number
-df["Month"] = df["Date"].dt.month
+print("\nBefore date:")
+print(dates[dates["Date"] < "2025-04-01"])
 
-# Extract month name
-df["MonthName"] = df["Date"].dt.month_name()
-
-# Extract day
-df["Day"] = df["Date"].dt.day
-
-# Extract day name
-df["DayName"] = df["Date"].dt.day_name()
-
-# Extract weekday number
-df["Weekday"] = df["Date"].dt.weekday
-
-# Extract quarter
-df["Quarter"] = df["Date"].dt.quarter
-
-# Extract hour
-df["Hour"] = df["Date"].dt.hour
-
-# Extract minute
-df["Minute"] = df["Date"].dt.minute
-
-# Start/end of month
-df["MonthStart"] = df["Date"].dt.to_period("M").dt.start_time
-df["MonthEnd"] = df["Date"].dt.to_period("M").dt.end_time
-
-
-# ============================================================
-# 29. DATE FILTERING
-# ============================================================
-
-# Filter after a date
-df[df["Date"] >= "2025-01-01"]
-
-# Filter before a date
-df[df["Date"] < "2025-12-31"]
-
-# Filter between dates
-df[
-    df["Date"].between(
-        "2025-01-01",
+print("\nBetween dates:")
+print(dates[
+    dates["Date"].between(
+        "2025-02-01",
         "2025-03-31"
     )
-]
+])
 
-# Sort by date
-df = df.sort_values("Date")
-
-
-# ============================================================
-# 30. TIME SERIES INDEX
-# ============================================================
-
-# Set datetime column as index
-df = df.set_index("Date")
-
-# Restore normal index
-df = df.reset_index()
+print("\nSorted by date:")
+print(dates.sort_values("Date"))
 
 
-# ============================================================
-# 31. RESAMPLING
-# ============================================================
+# ================================================================
+# 28. RESAMPLING
+# ================================================================
 
-# Daily sum
-daily = df["Revenue"].resample("D").sum()
+section("28. RESAMPLING")
 
-# Weekly sum
-weekly = df["Revenue"].resample("W").sum()
+time_series = dates.set_index("Date")
 
-# Monthly sum
-monthly = df["Revenue"].resample("ME").sum()
+print("\nDaily:")
+print(time_series["Revenue"].resample("D").sum())
 
-# Quarterly sum
-quarterly = df["Revenue"].resample("QE").sum()
+print("\nWeekly:")
+print(time_series["Revenue"].resample("W").sum())
 
-# Yearly sum
-yearly = df["Revenue"].resample("YE").sum()
+print("\nMonthly:")
+print(time_series["Revenue"].resample("ME").sum())
 
-# Monthly average
-monthly_average = (
-    df["Revenue"]
-    .resample("ME")
-    .mean()
-)
+print("\nQuarterly:")
+print(time_series["Revenue"].resample("QE").sum())
 
+print("\nYearly:")
+print(time_series["Revenue"].resample("YE").sum())
 
-# ============================================================
-# 32. ROLLING WINDOWS / MOVING AVERAGE
-# ============================================================
-
-# 7-period rolling mean
-df["RollingMean"] = (
-    df["Revenue"]
-    .rolling(7)
-    .mean()
-)
-
-# 7-period rolling sum
-df["RollingSum"] = (
-    df["Revenue"]
-    .rolling(7)
-    .sum()
-)
-
-# Rolling maximum
-df["RollingMax"] = (
-    df["Revenue"]
-    .rolling(7)
-    .max()
-)
+print("\nMonthly average:")
+print(time_series["Revenue"].resample("ME").mean())
 
 
-# ============================================================
-# 33. CUMULATIVE OPERATIONS
-# ============================================================
+# ================================================================
+# 29. ROLLING WINDOWS
+# ================================================================
 
-# Cumulative sum
-df["CumulativeRevenue"] = (
-    df["Revenue"].cumsum()
-)
+section("29. ROLLING WINDOWS")
 
-# Cumulative maximum
-df["CumulativeMax"] = (
-    df["Revenue"].cummax()
-)
+rolling = pd.DataFrame({
+    "Revenue": [100, 150, 120, 180, 200, 170, 220]
+})
 
-# Cumulative minimum
-df["CumulativeMin"] = (
-    df["Revenue"].cummin()
-)
+rolling["RollingMean"] = rolling["Revenue"].rolling(3).mean()
+rolling["RollingSum"] = rolling["Revenue"].rolling(3).sum()
+rolling["RollingMax"] = rolling["Revenue"].rolling(3).max()
 
-# Cumulative product
-df["CumulativeProduct"] = (
-    df["Revenue"].cumprod()
-)
+print(rolling)
 
 
-# ============================================================
-# 34. DIFFERENCE / LAG / LEAD
-# ============================================================
+# ================================================================
+# 30. CUMULATIVE OPERATIONS
+# ================================================================
 
-# Difference from previous row
-df["Difference"] = (
-    df["Revenue"].diff()
-)
+section("30. CUMULATIVE OPERATIONS")
 
-# Previous value
-df["PreviousRevenue"] = (
-    df["Revenue"].shift(1)
-)
+cumulative = pd.DataFrame({
+    "Revenue": [100, 150, 120, 180, 200]
+})
 
-# Next value
-df["NextRevenue"] = (
-    df["Revenue"].shift(-1)
-)
+cumulative["CumulativeSum"] = cumulative["Revenue"].cumsum()
+cumulative["CumulativeMax"] = cumulative["Revenue"].cummax()
+cumulative["CumulativeMin"] = cumulative["Revenue"].cummin()
+cumulative["CumulativeProduct"] = cumulative["Revenue"].cumprod()
 
-# Percentage change
-df["Growth"] = (
-    df["Revenue"].pct_change()
-)
-
-# Percentage change expressed as percentage
-df["GrowthPercent"] = (
-    df["Revenue"].pct_change() * 100
-)
+print(cumulative)
 
 
-# ============================================================
-# 35. STRING OPERATIONS
-# ============================================================
+# ================================================================
+# 31. DIFFERENCE / SHIFT / PERCENTAGE CHANGE
+# ================================================================
 
-# Remove leading/trailing whitespace
-df["Name"] = df["Name"].str.strip()
+section("31. DIFF / SHIFT / PCT_CHANGE")
 
-# Convert to lowercase
-df["Name"] = df["Name"].str.lower()
+changes = pd.DataFrame({
+    "Revenue": [100, 150, 120, 180, 200]
+})
 
-# Convert to uppercase
-df["Name"] = df["Name"].str.upper()
+changes["Difference"] = changes["Revenue"].diff()
+changes["PreviousRevenue"] = changes["Revenue"].shift(1)
+changes["NextRevenue"] = changes["Revenue"].shift(-1)
+changes["Growth"] = changes["Revenue"].pct_change()
+changes["GrowthPercent"] = changes["Revenue"].pct_change() * 100
 
-# Convert to title case
-df["Name"] = df["Name"].str.title()
+print(changes)
 
-# String length
-df["NameLength"] = df["Name"].str.len()
 
-# Contains substring
-df["Name"].str.contains(
-    "john",
-    case=False,
-    na=False
-)
+# ================================================================
+# 32. STRING OPERATIONS
+# ================================================================
 
-# Starts with
-df["Name"].str.startswith(
-    "A",
-    na=False
-)
+section("32. STRING OPERATIONS")
 
-# Ends with
-df["Name"].str.endswith(
-    "n",
-    na=False
-)
+names = pd.DataFrame({
+    "Name": [" Alice ", "BOB", "Charlie", "Diana", "Evan"],
+    "Email": [
+        "alice@example.com",
+        "bob@example.com",
+        "charlie@test.com",
+        "diana@example.com",
+        "evan@test.com"
+    ]
+})
 
-# Exact regex match
-df["Name"].str.match(
-    r"^[A-Z]",
-    na=False
-)
+names["Stripped"] = names["Name"].str.strip()
+names["Lower"] = names["Name"].str.lower()
+names["Upper"] = names["Name"].str.upper()
+names["Title"] = names["Name"].str.title()
+names["NameLength"] = names["Name"].str.len()
 
-# Replace text
-df["Name"] = df["Name"].str.replace(
-    "old",
-    "new",
+print(names)
+
+print("\nContains 'a':")
+print(names[names["Name"].str.contains("a", case=False, na=False)])
+
+print("\nStarts with A:")
+print(names[names["Name"].str.startswith("A", na=False)])
+
+print("\nEnds with n:")
+print(names[names["Name"].str.endswith("n", na=False)])
+
+print("\nRegex match — starts with capital:")
+print(names["Name"].str.match(r"^[A-Z]", na=False))
+
+names["CleanName"] = names["Name"].str.replace(
+    " ",
+    "",
     regex=False
 )
 
-# Replace using regex
-df["Phone"] = df["Phone"].str.replace(
-    r"\D",
-    "",
-    regex=True
+print("\nReplace:")
+print(names[["Name", "CleanName"]])
+
+print("\nSplit:")
+print(names["Name"].str.split())
+
+split_names = pd.DataFrame({
+    "FullName": ["Alice Kumar", "Bob Raj", "Charlie Das"]
+})
+split_names[["FirstName", "LastName"]] = (
+    split_names["FullName"]
+    .str.split(" ", n=1, expand=True)
 )
+print(split_names)
 
-# Split string
-df["FullName"].str.split()
-
-# Split into separate columns
-df[["FirstName", "LastName"]] = (
-    df["FullName"]
-    .str.split(
-        " ",
-        n=1,
-        expand=True
-    )
-)
-
-# Extract using regex
-df["EmailDomain"] = (
-    df["Email"]
-    .str.extract(
-        r"@(.+)$"
-    )
-)
-
-# Extract a phone number
-df["PhoneNumber"] = (
-    df["Text"]
-    .str.extract(
-        r"(\d{10})"
-    )
-)
+names["EmailDomain"] = names["Email"].str.extract(r"@(.+)$")
+print("\nEmail domain extraction:")
+print(names[["Email", "EmailDomain"]])
 
 
-# ============================================================
-# 36. STRING CLEANING PIPELINE
-# ============================================================
+# ================================================================
+# 33. STRING CLEANING PIPELINE
+# ================================================================
 
-df["Name"] = (
-    df["Name"]
+section("33. STRING CLEANING PIPELINE")
+
+cleaning = pd.DataFrame({
+    "Name": [" alice ", "BOB", " charlie ", "DIANA"]
+})
+
+cleaning["Name"] = (
+    cleaning["Name"]
     .astype("string")
     .str.strip()
     .str.lower()
     .str.title()
 )
 
-
-# ============================================================
-# 37. MEMORY USAGE
-# ============================================================
-
-# Memory usage of each column
-df.memory_usage()
-
-# Include deep memory usage for object/string data
-df.memory_usage(
-    deep=True
-)
-
-# Total memory usage
-df.memory_usage(
-    deep=True
-).sum()
-
-# Convert bytes to MB
-memory_mb = (
-    df.memory_usage(deep=True).sum()
-    / (1024 ** 2)
-)
+print(cleaning)
 
 
-# ============================================================
-# 38. MEMORY OPTIMIZATION
-# ============================================================
+# ================================================================
+# 34. MEMORY USAGE
+# ================================================================
 
-# Convert repeated strings to category
-df["Department"] = (
-    df["Department"]
-    .astype("category")
-)
+section("34. MEMORY USAGE")
 
-# Use smaller integer type when values fit
-df["Quantity"] = (
-    df["Quantity"]
-    .astype("int8")
-)
+print("\nPer-column memory:")
+print(employees.memory_usage())
 
-# Use smaller integer type
-df["EmployeeID"] = (
-    df["EmployeeID"]
-    .astype("int32")
-)
+print("\nDeep memory usage:")
+print(employees.memory_usage(deep=True))
 
-# Specify only required columns while reading
-df = pd.read_csv(
-    "large_file.csv",
-    usecols=[
-        "EmployeeID",
-        "Department",
-        "Revenue"
-    ]
-)
+memory_bytes = employees.memory_usage(deep=True).sum()
+memory_mb = memory_bytes / (1024 ** 2)
+
+print("\nTotal bytes:", memory_bytes)
+print("Total MB:", round(memory_mb, 4))
 
 
-# ============================================================
-# 39. LARGE DATASET CHUNK PROCESSING
-# ============================================================
+# ================================================================
+# 35. MEMORY OPTIMIZATION
+# ================================================================
 
-# Read a large CSV in chunks
-for chunk in pd.read_csv(
-    "large_file.csv",
-    chunksize=10000
-):
-    # Process one chunk at a time
-    pass
+section("35. MEMORY OPTIMIZATION")
 
-# Count rows incrementally
+optimized = employees.copy()
+
+optimized["Department"] = optimized["Department"].astype("category")
+optimized["Age"] = optimized["Age"].astype("int8")
+optimized["EmployeeID"] = optimized["EmployeeID"].astype("int32")
+
+print("Optimized dtypes:")
+print(optimized.dtypes)
+
+print("\nMemory before:")
+print(round(employees.memory_usage(deep=True).sum() / (1024 ** 2), 4), "MB")
+
+print("Memory after:")
+print(round(optimized.memory_usage(deep=True).sum() / (1024 ** 2), 4), "MB")
+
+
+# ================================================================
+# 36. CHUNK PROCESSING
+# ================================================================
+
+section("36. CHUNK PROCESSING")
+
+large_csv = StringIO()
+sales.to_csv(large_csv, index=False)
+large_csv.seek(0)
+
 total_rows = 0
-
-for chunk in pd.read_csv(
-    "large_file.csv",
-    chunksize=10000
-):
-    total_rows += len(chunk)
-
-
-# Incremental sum
 total_revenue = 0
 
-for chunk in pd.read_csv(
-    "large_file.csv",
-    chunksize=10000
-):
-    total_revenue += (
-        chunk["Revenue"].sum()
-    )
+for chunk in pd.read_csv(large_csv, chunksize=3):
+    total_rows += len(chunk)
+    total_revenue += chunk["Revenue"].sum()
 
+print("Rows processed:", total_rows)
+print("Revenue processed:", total_revenue)
 
-# Chunk-level groupby results
+# Chunk-level groupby
+large_csv.seek(0)
 results = []
 
-for chunk in pd.read_csv(
-    "large_file.csv",
-    chunksize=10000
-):
+for chunk in pd.read_csv(large_csv, chunksize=3):
     result = (
-        chunk
-        .groupby("Category")["Revenue"]
+        chunk.groupby("Category")["Revenue"]
         .sum()
     )
-
     results.append(result)
 
-# Combine chunk results
 combined = pd.concat(results)
 
-# Aggregate again because the same group may occur
-# in multiple chunks
 final_result = (
     combined
     .groupby(level=0)
     .sum()
+    .sort_values(ascending=False)
 )
 
+print("\nFinal chunk-level category revenue:")
+print(final_result)
 
-# ============================================================
-# 40. CHUNK PROCESSING WITH DATAFRAME OUTPUT
-# ============================================================
 
-results = []
+# ================================================================
+# 37. CONDITIONAL COLUMNS
+# ================================================================
 
-for chunk in pd.read_csv(
-    "large_file.csv",
-    chunksize=10000
-):
-    result = (
-        chunk
-        .groupby("Category")["Revenue"]
-        .sum()
-        .reset_index()
-    )
+section("37. CONDITIONAL COLUMNS")
 
-    results.append(result)
+conditions_demo = sales.copy()
 
-combined = pd.concat(
-    results,
-    ignore_index=True
+conditions_demo["HighValue"] = (
+    conditions_demo["Revenue"] > 100000
 )
 
-final_result = (
-    combined
-    .groupby("Category", as_index=False)["Revenue"]
-    .sum()
-)
-
-
-# ============================================================
-# 41. CONDITIONAL COLUMNS
-# ============================================================
-
-# Boolean condition
-df["HighValue"] = (
-    df["Revenue"] > 100000
-)
-
-# Multiple conditions with np.select
 conditions = [
-    df["Revenue"] >= 100000,
-    df["Revenue"] >= 50000,
-    df["Revenue"] < 50000
+    conditions_demo["Revenue"] >= 100000,
+    conditions_demo["Revenue"] >= 50000,
+    conditions_demo["Revenue"] < 50000
 ]
 
-choices = [
-    "High",
-    "Medium",
-    "Low"
-]
+choices = ["High", "Medium", "Low"]
 
-df["RevenueLevel"] = np.select(
+conditions_demo["RevenueLevel"] = np.select(
     conditions,
     choices,
     default="Unknown"
 )
 
+print(conditions_demo[
+    ["OrderID", "Revenue", "HighValue", "RevenueLevel"]
+])
 
-# ============================================================
-# 42. REPLACE VALUES
-# ============================================================
 
-# Replace one value
-df["Department"] = (
-    df["Department"]
-    .replace(
-        "IT",
-        "Technology"
-    )
+# ================================================================
+# 38. REPLACE VALUES
+# ================================================================
+
+section("38. REPLACE VALUES")
+
+replace_demo = employees.copy()
+
+replace_demo["Department"] = replace_demo["Department"].replace(
+    "IT",
+    "Technology"
 )
 
-# Replace multiple values
-df["Department"] = (
-    df["Department"]
-    .replace({
-        "IT": "Technology",
-        "HR": "Human Resources"
-    })
-)
+print("\nReplace one value:")
+print(replace_demo[["Name", "Department"]])
+
+replace_demo["Department"] = replace_demo["Department"].replace({
+    "HR": "Human Resources",
+    "Sales": "Sales & Marketing"
+})
+
+print("\nReplace multiple values:")
+print(replace_demo[["Name", "Department"]])
 
 
-# ============================================================
-# 43. DROP ROWS / COLUMNS
-# ============================================================
+# ================================================================
+# 39. DROP ROWS / COLUMNS
+# ================================================================
 
-# Drop a row by index
-df = df.drop(index=0)
+section("39. DROP ROWS / COLUMNS")
 
-# Drop multiple rows
-df = df.drop(
-    index=[0, 1, 2]
-)
+print("\nDrop row by index:")
+print(employees.drop(index=0))
 
-# Drop a column
-df = df.drop(
-    columns="Salary"
-)
+print("\nDrop multiple rows:")
+print(employees.drop(index=[0, 1]))
 
-# Drop multiple columns
-df = df.drop(
-    columns=["Salary", "Age"]
-)
+print("\nDrop column:")
+print(employees.drop(columns="Age").head())
+
+print("\nDrop multiple columns:")
+print(employees.drop(columns=["Age", "City"]).head())
 
 
-# ============================================================
-# 44. INSERT / REORDER COLUMNS
-# ============================================================
+# ================================================================
+# 40. INSERT / REORDER COLUMNS
+# ================================================================
 
-# Insert a column at a specific position
-df.insert(
+section("40. INSERT / REORDER COLUMNS")
+
+insert_demo = employees.copy()
+insert_demo.insert(
     1,
-    "NewColumn",
-    values=None
+    "EmployeeType",
+    ["Full-Time"] * len(insert_demo)
 )
 
-# Reorder columns
-df = df[
+print("\nInserted column:")
+print(insert_demo.head())
+
+reordered = insert_demo[
     [
         "EmployeeID",
         "Name",
+        "EmployeeType",
         "Department",
-        "Salary"
+        "City",
+        "Age",
+        "Salary",
+        "JoinDate"
     ]
 ]
 
-
-# ============================================================
-# 45. COPY
-# ============================================================
-
-# Independent copy
-df_copy = df.copy()
-
-# Avoid accidentally modifying the original DataFrame
-# when performing transformations on a separate object.
+print("\nReordered columns:")
+print(reordered.head())
 
 
-# ============================================================
-# 46. RESETTING / IGNORING INDEX AFTER OPERATIONS
-# ============================================================
+# ================================================================
+# 41. COPY
+# ================================================================
 
-df = df.reset_index(drop=True)
+section("41. COPY")
 
-combined = pd.concat(
-    [df1, df2],
-    ignore_index=True
+df_copy = employees.copy()
+
+print("Original and copy are separate objects:")
+print("Same object:", employees is df_copy)
+print("Same values:")
+print(employees.equals(df_copy))
+
+
+# ================================================================
+# 42. DATA VALIDATION
+# ================================================================
+
+section("42. DATA VALIDATION")
+
+print("Duplicate EmployeeIDs:", employees["EmployeeID"].duplicated().sum())
+print("Missing EmployeeIDs:", employees["EmployeeID"].isna().sum())
+
+calculated_revenue = sales["Quantity"] * sales["Price"]
+
+print(
+    "Revenue calculation is correct:",
+    sales["Revenue"].equals(calculated_revenue)
 )
 
 
-# ============================================================
-# 47. DATA VALIDATION PATTERNS
-# ============================================================
+# ================================================================
+# 43. FIND MAX / MIN ROWS
+# ================================================================
 
-# Check duplicate IDs
-df["EmployeeID"].duplicated().sum()
+section("43. FIND MAX / MIN ROWS")
 
-# Check missing IDs
-df["EmployeeID"].isna().sum()
+max_index = sales["Revenue"].idxmax()
+min_index = sales["Revenue"].idxmin()
 
-# Check whether a calculated column is correct
-calculated_revenue = (
-    df["Quantity"] *
-    df["Price"]
-)
+print("\nHighest revenue row:")
+print(sales.loc[max_index])
 
-df["Revenue"].equals(
-    calculated_revenue
-)
+print("\nLowest revenue row:")
+print(sales.loc[min_index])
 
-# Raise an error if validation fails
-if not df["Revenue"].equals(
-    calculated_revenue
-):
-    raise ValueError(
-        "Revenue calculation mismatch."
-    )
+print("\nTop 5 revenue rows:")
+print(sales.nlargest(5, "Revenue"))
 
 
-# ============================================================
-# 48. FIND ROWS WITH MAX / MIN VALUES
-# ============================================================
+# ================================================================
+# 44. RESET / RENAME AFTER GROUPBY
+# ================================================================
 
-# Index of maximum value
-idx = df["Revenue"].idxmax()
-
-# Row containing maximum value
-best_row = df.loc[idx]
-
-# Index of minimum value
-idx = df["Revenue"].idxmin()
-
-# Row containing minimum value
-lowest_row = df.loc[idx]
-
-# Top N rows
-top_rows = df.nlargest(
-    10,
-    "Revenue"
-)
-
-
-# ============================================================
-# 49. RESET / RENAME AFTER GROUPBY
-# ============================================================
+section("44. GROUPBY → RESET INDEX → RENAME")
 
 report = (
-    df.groupby("Department")["Salary"]
+    employees
+    .groupby("Department")["Salary"]
     .sum()
     .reset_index()
 )
@@ -1532,41 +1341,19 @@ report.columns = [
     "TotalSalary"
 ]
 
+print(report)
 
-# ============================================================
-# 50. COMMON PIPELINE PATTERN
-# ============================================================
 
-# A common Pandas analysis workflow:
-#
-# 1. Load
-# 2. Inspect
-# 3. Clean
-# 4. Transform
-# 5. Filter
-# 6. Combine
-# 7. Aggregate
-# 8. Analyze
-# 9. Export
+# ================================================================
+# 45. COMMON END-TO-END PIPELINE
+# ================================================================
 
-df = pd.read_csv("data.csv")
+section("45. COMMON PANDAS ANALYSIS PIPELINE")
 
-df.info()
-
-df = df.drop_duplicates()
-
-df["Date"] = pd.to_datetime(
-    df["Date"],
-    errors="coerce"
-)
-
-df["Revenue"] = (
-    df["Quantity"] *
-    df["Price"]
-)
-
-report = (
-    df[df["Revenue"] > 50000]
+pipeline_report = (
+    sales[
+        sales["Revenue"] > 20000
+    ]
     .groupby("Category")
     .agg(
         Orders=("OrderID", "count"),
@@ -1580,146 +1367,123 @@ report = (
     )
 )
 
-report.to_csv(
-    "output/report.csv",
-    index=False
-)
+print("""
+Typical Pandas workflow:
+
+1. LOAD
+2. INSPECT
+3. CLEAN
+4. TRANSFORM
+5. FILTER
+6. COMBINE
+7. AGGREGATE
+8. ANALYZE
+9. EXPORT
+""")
+
+print("Example final report:")
+print(pipeline_report)
 
 
-# ============================================================
-# 51. QUICK REFERENCE — MOST USED OPERATIONS
-# ============================================================
+# ================================================================
+# 46. QUICK REFERENCE
+# ================================================================
 
-# Loading
-pd.read_csv(...)
-pd.read_excel(...)
+section("46. QUICK REFERENCE")
 
-# Inspection
-df.head()
-df.tail()
-df.shape
-df.info()
-df.describe()
-df.dtypes
+quick_reference = {
+    "Load CSV": 'pd.read_csv("file.csv")',
+    "Load Excel": 'pd.read_excel("file.xlsx")',
+    "Inspect": "df.head(), df.info(), df.describe()",
+    "Shape": "df.shape",
+    "Columns": "df.columns",
+    "Types": "df.dtypes",
+    "Select column": 'df["Column"]',
+    "Select rows": "df.loc[...] / df.iloc[...]",
+    "Missing": "df.isna().sum()",
+    "Duplicates": "df.duplicated().sum()",
+    "Filter": 'df[df["Column"] > value]',
+    "Sort": 'df.sort_values("Column")',
+    "Unique": 'df["Column"].unique()',
+    "Count unique": 'df["Column"].nunique()',
+    "Statistics": 'df["Column"].mean() / sum() / min() / max()',
+    "GroupBy": 'df.groupby("Column")["Value"].sum()',
+    "Aggregation": 'df.groupby(...).agg(...)',
+    "Merge": "pd.merge(df1, df2, ...)",
+    "Concat": "pd.concat([df1, df2])",
+    "Pivot": "pd.pivot_table(...)",
+    "Crosstab": "pd.crosstab(...)",
+    "Datetime": 'pd.to_datetime(df["Date"])',
+    "Resample": 'df.resample("ME").sum()',
+    "Rolling": 'df["Value"].rolling(7).mean()',
+    "Shift": 'df["Value"].shift(1)',
+    "Difference": 'df["Value"].diff()',
+    "Growth": 'df["Value"].pct_change()',
+    "Strings": 'df["Column"].str.strip()',
+    "Memory": "df.memory_usage(deep=True)",
+    "Chunks": 'pd.read_csv(..., chunksize=10000)',
+    "Export CSV": 'df.to_csv("output.csv", index=False)',
+    "Export Excel": 'df.to_excel("output.xlsx", index=False)',
+}
 
-# Selection
-df["Column"]
-df[["A", "B"]]
-df.loc[...]
-df.iloc[...]
-
-# Cleaning
-df.isna()
-df.dropna()
-df.fillna(...)
-df.duplicated()
-df.drop_duplicates()
-
-# Filtering
-df[df["Column"] > value]
-df["Column"].isin([...])
-df["Column"].between(a, b)
-df.query("Column > value")
-
-# Sorting
-df.sort_values(...)
-df.sort_index()
-df.nlargest(...)
-df.nsmallest()
-
-# Transformation
-df["New"] = ...
-df.apply(...)
-df.map(...)
-df.astype(...)
-
-# Grouping
-df.groupby(...)
-df.agg(...)
-
-# Combining
-pd.merge(...)
-pd.concat(...)
-
-# Pivoting
-pd.pivot_table(...)
-pd.crosstab(...)
-
-# Datetime
-pd.to_datetime(...)
-df["Date"].dt.year
-df["Date"].dt.month
-df.resample(...)
-df.rolling(...)
-df.diff()
-df.shift()
-df.pct_change()
-
-# Strings
-df["Column"].str.strip()
-df["Column"].str.lower()
-df["Column"].str.upper()
-df["Column"].str.contains(...)
-df["Column"].str.replace(...)
-df["Column"].str.split(...)
-df["Column"].str.extract(...)
-
-# Large datasets
-df.memory_usage(deep=True)
-pd.read_csv(..., usecols=...)
-pd.read_csv(..., chunksize=...)
-
-# Export
-df.to_csv(...)
-df.to_excel(...)
+for operation, syntax in quick_reference.items():
+    print(f"{operation:<18} → {syntax}")
 
 
-# ============================================================
-# 52. END-TO-END REVISION CHECKLIST
-# ============================================================
+# ================================================================
+# 47. REVISION CHECKLIST
+# ================================================================
 
-"""
-Before starting the large-scale Pandas project, make sure you can
-recognize and use these categories:
+section("47. PANDAS REVISION CHECKLIST")
 
-[ ] Create DataFrame / Series
-[ ] Read CSV
-[ ] Read Excel
-[ ] Inspect Data
-[ ] Select Rows / Columns
-[ ] loc / iloc
-[ ] Index Management
-[ ] Rename Columns
-[ ] Change Data Types
-[ ] Handle Missing Values
-[ ] Handle Duplicates
-[ ] Filter Data
-[ ] Sort Data
-[ ] value_counts
-[ ] unique / nunique
-[ ] Statistics
-[ ] Create Calculated Columns
-[ ] apply / map
-[ ] groupby
-[ ] agg
-[ ] merge / joins
-[ ] concat
-[ ] pivot_table
-[ ] crosstab
-[ ] Datetime Operations
-[ ] Resampling
-[ ] Rolling Windows
-[ ] diff / shift / pct_change
-[ ] String Operations
-[ ] Regex Extraction
-[ ] Memory Usage
-[ ] dtype Optimization
-[ ] Chunk Processing
-[ ] CSV Export
-[ ] Excel Export
-[ ] ExcelWriter
-[ ] Data Validation
+checklist = [
+    "Create Series / DataFrame",
+    "Read CSV",
+    "Read Excel",
+    "Write CSV / Excel",
+    "Inspect data",
+    "Select rows / columns",
+    "loc / iloc",
+    "Index management",
+    "Rename columns",
+    "Change data types",
+    "Missing values",
+    "Duplicates",
+    "Filtering",
+    "Sorting",
+    "value_counts",
+    "unique / nunique",
+    "Statistics",
+    "Calculated columns",
+    "apply / map",
+    "groupby",
+    "agg",
+    "merge / joins",
+    "concat",
+    "pivot_table",
+    "crosstab",
+    "Datetime",
+    "Date filtering",
+    "Resampling",
+    "Rolling windows",
+    "diff / shift / pct_change",
+    "String operations",
+    "Regex extraction",
+    "Memory usage",
+    "dtype optimization",
+    "Chunk processing",
+    "Conditional columns",
+    "Replace values",
+    "Data validation",
+    "CSV / Excel export",
+]
 
-The purpose of this file is revision. The large-scale project will
-require combining these operations rather than using them in isolation.
-"""
+for i, item in enumerate(checklist, start=1):
+    print(f"[ ] {i:02d}. {item}")
+
+
+print("\n" + "=" * 72)
+print("✅ PANDAS CHEAT SHEET COMPLETED SUCCESSFULLY")
+print("=" * 72)
+print("This file ran entirely from its built-in demo data.")
+print("No external dataset was required.")
