@@ -1,12 +1,12 @@
 # 🐼 Pandas Learning by Projects
 
-A hands-on collection of **Pandas mini projects** created to learn data manipulation, cleaning, analysis, time-series processing, text processing, large-dataset handling, and Excel automation through practical implementation.
+A hands-on collection of **Pandas projects** designed to learn data manipulation, cleaning, analysis, time-series processing, text processing, large-dataset handling, Excel automation, and real-world data analysis through practical implementation.
 
-Instead of learning Pandas through isolated syntax and theory, each topic is learned by building a small real-world project.
+Instead of learning Pandas through isolated syntax and theory, each topic is learned by **building projects and applying the concepts to real or realistic datasets**.
 
 ---
 
-## 🎯 Goal
+# 🎯 Goal
 
 Build a strong practical foundation in **Pandas** that can be used for:
 
@@ -18,29 +18,55 @@ Build a strong practical foundation in **Pandas** that can be used for:
 - Data Preprocessing
 - Business Analytics
 
+The ultimate goal is to become comfortable taking raw data and performing a complete:
+
+```text
+Load
+ ↓
+Inspect
+ ↓
+Clean
+ ↓
+Transform
+ ↓
+Combine
+ ↓
+Analyze
+ ↓
+Report
+ ↓
+Export
+```
+
+workflow using Pandas.
+
 ---
 
-## 📚 Learning Approach
+# 📚 Learning Approach
 
-The repository follows a simple approach:
+This repository follows a simple approach:
 
 ```text
 One Topic
     ↓
 One Practical Project
     ↓
-Learn the Required Pandas Concepts
+Learn Required Concepts
     ↓
 Implement
     ↓
-Analyze the Results
+Analyze Results
     ↓
-Complete the Project
+Complete Project
     ↓
-Move to the Next Topic
+Move to Next Topic
 ```
 
-The focus is on **learning by building** rather than memorizing Pandas functions individually.
+The focus is on:
+
+> **Learn by building, not by memorizing.**
+
+After completing the project series, the complete Pandas workflow is revised again through a larger real-world dataset.
 
 ---
 
@@ -48,9 +74,10 @@ The focus is on **learning by building** rather than memorizing Pandas functions
 
 - Python 3.x
 - Pandas
-- Jupyter Notebook
 - NumPy
+- Jupyter Notebook
 - OpenPyXL
+- Kaggle / Public Datasets
 
 ---
 
@@ -77,6 +104,13 @@ pandas-learning-projects/
 │
 ├── 09_Excel_Data_Processing/
 │
+├── 10_Final_Pandas_Analysis_Project/
+│   ├── data/
+│   ├── output/
+│   ├── notebook.ipynb
+│   └── README.md
+│
+├── pandas_cheatsheet.py
 ├── requirements.txt
 └── README.md
 ```
@@ -85,19 +119,20 @@ pandas-learning-projects/
 
 # 📈 Project Progress
 
-## 🟢 Pandas Series — 9/9 Complete
+## 🟢 Pandas Series — 10/10 Complete
 
 | # | Project | Main Concepts | Status |
 |---|---|---|:---:|
-| 01 | Student Marks Analyzer | DataFrames, Selection, Filtering, Statistics       | ✅ |
-| 02 | Data Cleaning & Missing Values | Missing Values, Duplicates, Data Cleaning  | ✅ |
-| 03 | Sales Data Analysis | Filtering, Sorting, GroupBy, Aggregation              | ✅ |
-| 04 | Merge & Join | Merge, Joins, Combining DataFrames                           | ✅ |
-| 05 | Pivot Tables & Crosstabs | Pivot Tables, Crosstabs, MultiIndex              | ✅ |
-| 06 | Time Series Analysis | Datetime, Resampling, Rolling, Time Features         | ✅ |
-| 07 | Customer Reviews Analysis | String Operations, Regex, Text Processing       | ✅ |
-| 08 | Large Dataset Analysis | Chunking, Memory Optimization, Large CSVs          | ✅ |
-| 09 | Excel Data Processing | Excel I/O, Multi-Sheet Reports, Automation          | ✅ |
+| 01 | Student Marks Analyzer | DataFrames, Series, Selection, Filtering, Statistics | ✅ |
+| 02 | Data Cleaning & Missing Values | Missing Values, Duplicates, Cleaning, Validation | ✅ |
+| 03 | Sales Data Analysis | Filtering, Sorting, GroupBy, Aggregation | ✅ |
+| 04 | Merge & Join | Merge, Joins, Combining DataFrames | ✅ |
+| 05 | Pivot Tables & Crosstabs | Pivot Tables, Crosstabs, MultiIndex | ✅ |
+| 06 | Time Series Analysis | Datetime, Resampling, Rolling, Time Features | ✅ |
+| 07 | String Operations | String Processing, Regex, Text Cleaning | ✅ |
+| 08 | Large Dataset Analysis | Chunking, Memory Optimization, Large CSVs | ✅ |
+| 09 | Excel Data Processing | Excel I/O, Multi-Sheet Reports, Automation | ✅ |
+| 10 | Final Pandas Analysis Project | Complete Pandas Workflow, Real Dataset, Business Analysis | ✅ |
 
 ---
 
@@ -105,7 +140,7 @@ pandas-learning-projects/
 
 ## 01 — Student Marks Analyzer
 
-A basic student performance analysis project designed to learn the fundamentals of Pandas.
+A beginner-friendly project designed to learn the fundamentals of Pandas using student performance data.
 
 ### Concepts
 
@@ -119,6 +154,8 @@ A basic student performance analysis project designed to learn the fundamentals 
 - Statistical analysis
 - GroupBy
 - Exporting results
+
+**Status:** ✅ Completed
 
 ---
 
@@ -138,6 +175,8 @@ A practical employee dataset cleaning project involving messy and incomplete dat
 - Data type conversion
 - String cleaning
 - Data validation
+
+**Status:** ✅ Completed
 
 ---
 
@@ -160,6 +199,8 @@ A sales analytics project focused on extracting business insights from transacti
 - Aggregation
 - Business-oriented analysis
 
+**Status:** ✅ Completed
+
 ---
 
 ## 04 — Merge & Join
@@ -178,6 +219,8 @@ A project focused on combining information from multiple DataFrames.
 - `suffixes`
 - `indicator`
 - Multiple DataFrame merging
+
+**Status:** ✅ Completed
 
 ---
 
@@ -199,7 +242,9 @@ An employee performance analysis project using Pivot Tables and Crosstabs to cre
 - MultiIndex
 - `crosstab()`
 - Crosstab normalization
-- Dashboard-style summaries
+- Summary reports
+
+**Status:** ✅ Completed
 
 ---
 
@@ -228,11 +273,13 @@ A sales trend analysis project focused on working with dates and time-based data
 - `pct_change()`
 - Growth analysis
 
+**Status:** ✅ Completed
+
 ---
 
-## 07 — Customer Reviews Analysis
+## 07 — String Operations
 
-A text-processing project using Pandas string operations to clean and analyze customer reviews.
+A text-processing project focused on cleaning and analyzing text using Pandas.
 
 ### Concepts
 
@@ -249,20 +296,18 @@ A text-processing project using Pandas string operations to clean and analyze cu
 - `str.split()`
 - `str.extract()`
 - Regular expressions
-- Email extraction
-- Phone number cleaning
-- Text validation
-- Word counting
+- Text cleaning
 - Keyword analysis
-- Sentiment classification
 - `apply()`
 - `value_counts()`
+
+**Status:** ✅ Completed
 
 ---
 
 ## 08 — Large Dataset Analysis
 
-An e-commerce transaction analysis project designed to understand how Pandas can process datasets that are too large to comfortably load into memory at once.
+An e-commerce transaction analysis project designed to understand how Pandas can process larger datasets efficiently.
 
 ### Concepts
 
@@ -302,6 +347,8 @@ Combine Results
 Generate Final Report
 ```
 
+**Status:** ✅ Completed
+
 ---
 
 ## 09 — Excel Data Processing & Automation
@@ -315,7 +362,6 @@ An automated business reporting project using Excel workbooks containing multipl
 - Reading multiple sheets
 - `sheet_name=None`
 - `ExcelFile()`
-- `sheet_names`
 - `usecols`
 - `skiprows`
 - `nrows`
@@ -350,7 +396,7 @@ Generate Reports
 Export Excel Workbook
 ```
 
-Generated reports include:
+### Generated Reports
 
 ```text
 Executive Summary
@@ -361,6 +407,208 @@ City Report
 Category Report
 Sales Details
 ```
+
+**Status:** ✅ Completed
+
+---
+
+# 10 — Final Pandas Analysis Project
+
+The final project is a **large-scale Pandas revision project** using the **Brazilian Olist E-Commerce dataset**.
+
+The purpose of this project is different from the previous mini projects.
+
+Instead of learning one new Pandas topic, this project combines the concepts learned throughout the entire Pandas series and applies them to a real-world multi-table dataset.
+
+### Dataset
+
+The project uses multiple Olist datasets:
+
+```text
+olist_customers_dataset.csv
+olist_geolocation_dataset.csv
+olist_order_items_dataset.csv
+olist_order_payments_dataset.csv
+olist_order_reviews_dataset.csv
+olist_orders_dataset.csv
+olist_products_dataset.csv
+olist_sellers_dataset.csv
+product_category_name_translation.csv
+```
+
+### Concepts Revised
+
+- Loading multiple CSV datasets
+- Dataset inspection
+- `shape`
+- `columns`
+- `dtypes`
+- `info()`
+- `describe()`
+- Missing-value analysis
+- Duplicate analysis
+- Datetime conversion
+- Key integrity analysis
+- Filtering
+- Sorting
+- `value_counts()`
+- `unique()`
+- `nunique()`
+- Calculated columns
+- `groupby()`
+- Aggregation
+- `merge()`
+- Multiple DataFrame joins
+- Pivot tables
+- Crosstabs
+- String operations
+- Datetime analysis
+- Resampling
+- Delivery-time analysis
+- Business metrics
+- CSV export
+- Excel report generation
+
+### Main Analytical Workflow
+
+```text
+Olist Raw Datasets
+        ↓
+Dataset Inspection
+        ↓
+Data Cleaning
+        ↓
+Missing Value Analysis
+        ↓
+Duplicate Analysis
+        ↓
+Datetime Conversion
+        ↓
+Key Integrity Checks
+        ↓
+Merge Multiple Tables
+        ↓
+Master Analytical Dataset
+        ↓
+Business Analysis
+        ↓
+Time-Series Analysis
+        ↓
+Category Analysis
+        ↓
+Seller Analysis
+        ↓
+Customer Analysis
+        ↓
+Pivot / Crosstab Analysis
+        ↓
+Final Reports
+```
+
+### Business Analysis Performed
+
+- Order status analysis
+- Payment analysis
+- Revenue analysis
+- Product analysis
+- Customer state analysis
+- Customer city analysis
+- Category revenue analysis
+- Seller performance analysis
+- Monthly revenue analysis
+- Monthly order analysis
+- State × Category analysis
+- Payment × Order Status analysis
+- Delivery-time analysis
+- Average order value
+- Top categories
+- Top sellers
+- Top states
+- Payment-type analysis
+- Delivered-order percentage
+- Cancelled-order percentage
+
+### Final Outputs
+
+```text
+output/
+│
+├── category_sales.csv
+├── seller_sales.csv
+├── monthly_sales.csv
+├── monthly_orders.csv
+├── state_revenue.csv
+└── olist_analysis_report.xlsx
+```
+
+**Status:** ✅ Completed
+
+---
+
+# 📖 Pandas Cheat Sheet
+
+The repository also contains:
+
+```text
+pandas_cheatsheet.py
+```
+
+This is a **self-contained, runnable Pandas reference file**.
+
+Unlike a syntax-only cheat sheet, it contains a small built-in demonstration dataset so the examples can be executed at any time without requiring an external dataset.
+
+### The cheat sheet covers
+
+- Series
+- DataFrames
+- CSV I/O
+- Excel I/O
+- Data inspection
+- Selection
+- `loc`
+- `iloc`
+- Indexing
+- Renaming
+- Data types
+- Missing values
+- Duplicates
+- Filtering
+- Sorting
+- `value_counts()`
+- Statistics
+- Calculated columns
+- `apply()`
+- `map()`
+- GroupBy
+- Aggregation
+- Merge / Join
+- Concatenation
+- Pivot Tables
+- Crosstabs
+- Datetime
+- Date filtering
+- Resampling
+- Rolling windows
+- Cumulative calculations
+- `diff()`
+- `shift()`
+- `pct_change()`
+- String operations
+- Regex
+- Memory usage
+- Memory optimization
+- Chunk processing
+- Conditional columns
+- Data validation
+- CSV / Excel export
+
+### Running the Cheat Sheet
+
+```bash
+python pandas_cheatsheet.py
+```
+
+The file is designed to run independently using its built-in demonstration data.
 
 ---
 
@@ -383,6 +631,7 @@ Sales Details
 - Indexing
 - Selection
 - Inspection
+- Data types
 
 ## Data Cleaning
 
@@ -401,6 +650,8 @@ Sales Details
 - Creating columns
 - Calculated columns
 - `apply()`
+- `map()`
+- `replace()`
 
 ## Data Analysis
 
@@ -417,7 +668,8 @@ Sales Details
 - Left Join
 - Right Join
 - Outer Join
-- Multiple DataFrames
+- Multiple DataFrame joins
+- Concatenation
 
 ## Pivot Analysis
 
@@ -450,7 +702,7 @@ Sales Details
 - Extraction
 - Regex
 - Keyword analysis
-- Basic text classification
+- Basic text processing
 
 ## Large Dataset Processing
 
@@ -468,6 +720,7 @@ Sales Details
 - Multiple worksheets
 - Excel reporting
 - Automated report generation
+- Reusable analysis functions
 
 ---
 
@@ -475,19 +728,21 @@ Sales Details
 
 | Metric | Value |
 |---|---:|
-| Projects | **9** |
-| Completed | **9** |
+| Mini Projects | **9** |
+| Final Project | **1** |
+| Total Projects | **10** |
+| Completed | **10** |
 | Completion | **100%** |
 | Primary Library | **Pandas** |
 | Language | **Python** |
-| Notebook Projects | **9** |
-| Major Topics | **9** |
+| Runnable Cheat Sheet | **1** |
+| Major Project Areas | **10** |
 
 ---
 
 # 📦 Installation
 
-Clone the repository and install the required dependencies.
+Clone the repository:
 
 ```bash
 git clone <your-repository-url>
@@ -499,8 +754,6 @@ Create a virtual environment:
 ```bash
 python -m venv .venv
 ```
-
-Activate it.
 
 ### Linux / Ubuntu
 
@@ -532,44 +785,43 @@ Start Jupyter:
 jupyter notebook
 ```
 
-Then open the project's:
+Then open:
 
 ```text
 notebook.ipynb
 ```
 
-Projects that contain Python scripts can also be executed directly:
+Projects containing Python scripts can also be executed directly:
 
 ```bash
 python script.py
 ```
 
-For example, the Excel automation project:
+The Pandas cheat sheet can be run directly:
 
 ```bash
-cd 09_Excel_Data_Processing
-python excel_report_generator.py
+python pandas_cheatsheet.py
 ```
 
 ---
 
 # 📁 Dataset Organization
 
-Datasets used throughout the projects are stored within their respective project directories or the common dataset directory.
+Datasets are stored within their respective project directories or common dataset locations.
 
-The datasets are either:
+The projects use:
 
 - Real-world datasets
 - Public datasets
 - Realistic synthetic datasets created specifically for learning
 
-The goal is to focus on the **Pandas workflow**, not merely dataset size or complexity.
+The focus is on learning the **Pandas workflow**, not simply working with large datasets.
 
 ---
 
 # 🎯 Learning Outcomes
 
-After completing these projects, I can practically work with Pandas for:
+After completing this repository, I can practically work with Pandas through the complete data-analysis workflow:
 
 ```text
 Load Data
@@ -591,24 +843,46 @@ Create Reports
 Export Results
 ```
 
-I also gained experience handling:
+I have also practiced working with:
 
 ```text
 CSV
 Excel
+Multiple DataFrames
 Time Series
 Text Data
 Large Datasets
-Business Reports
+Business Data
+Real-World Multi-Table Data
+```
+
+---
+
+# 🏆 Pandas Completion
+
+```text
+██████████████████████████████████ 100%
+```
+
+## 🐼 10 / 10 Projects Completed
+
+```text
+9 Mini Projects
+        +
+1 Final Large-Scale Project
+        +
+Runnable Pandas Cheat Sheet
+        ↓
+PANDAS COMPLETE ✅
 ```
 
 ---
 
 # 🚀 What's Next?
 
-This repository is the **Pandas foundation** of a larger project-based AI and Data Science learning roadmap.
+Pandas is the first major data-processing foundation in the larger project-based AI and Data Science roadmap.
 
-The next technologies/topics will build on the skills learned here.
+The next repository will focus on **NumPy**.
 
 ```text
 Pandas
@@ -636,15 +910,27 @@ MLOps
 End-to-End AI Systems
 ```
 
+The same philosophy will continue:
+
+```text
+Learn Concept
+      ↓
+Build Mini Project
+      ↓
+Practice
+      ↓
+Complete Project
+      ↓
+Move Forward
+```
+
 ---
 
 # 🗺️ Overall Learning Philosophy
 
-This repository follows a broader principle:
-
 > **Learn by building, not by memorizing.**
 
-For each technology:
+For every technology:
 
 ```text
 Concept
@@ -664,15 +950,21 @@ After completing a technology's project series, the technology can be studied se
 
 ---
 
-# 🏆 Completion
+# 🏁 Pandas Complete
 
-## 🐼 Pandas Learning Series
+The Pandas project series is now complete.
+
+The next step is:
 
 ```text
-██████████████████████████████████ 100%
-```
+🐼 Pandas
+   ✅ COMPLETE
 
-**9 / 9 Projects Completed**
+      ↓
+
+🔢 NumPy
+   🚀 NEXT
+```
 
 ---
 
